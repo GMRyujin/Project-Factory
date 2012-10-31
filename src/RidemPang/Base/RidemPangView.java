@@ -156,11 +156,11 @@ public class RidemPangView extends GameView {
 			BitmapLoader loader = BitmapLoader.getInstance();
 			currentTime += timeDelta;// 현재 게임의 시간. (게임이 진행된 후에 사용한다.)
 
-			if (!isStart) {// 게임이 시작되면 모든 버튼을 제거한다. (시작 버튼이 눌렸을때)
+			if (isStart) {// 게임이 시작되면 모든 버튼을 제거한다. (시작 버튼이 눌렸을때)
 				// 게임으로 진행한다.
 				if (isStarted == false) {// 한번만 진행한다.
 					isStarted = true;
-				/*	// 로비에서
+					// 로비에서
 					world.Remove((IDrawable) background);
 					world.Remove((IUpdateable) background);
 
@@ -309,6 +309,13 @@ public class RidemPangView extends GameView {
 							// TODO 게임을 시작한다.
 							if(backButton.IsMe(x, y)){
 								TechVibrator.getInstance().vibrate(500);
+								
+								//게임의 설정을 초기화 한다.
+								GameWorld.getInstance().Clear();
+								isMainStarted = false;
+								isStart = false;
+								isStarted = false;
+								
 							}
 						}
 
@@ -323,7 +330,7 @@ public class RidemPangView extends GameView {
 					});
 					world.Add((IDrawable) backButton);
 					world.Add((IControllable) backButton);
-					world.Add((IUpdateable) backButton);*/
+					world.Add((IUpdateable) backButton);
 
 
 					currentTime = 0;
@@ -331,8 +338,8 @@ public class RidemPangView extends GameView {
 					// 게임이 시작되면 걔속 여기부분이 호출된다.
 				Random rand = new Random();
 				if(currentTime % 5 < 0.09){
-					new RythemNote(rand.nextInt(getWidth()-50), 0, loader.get("BlueNote"),1);
-					new KBPalg(loader.get("BlueNote")[0], "Plag",rand.nextInt(getWidth()-50),20);
+					new RythemNote(rand.nextInt(getWidth()-50), 0, loader.get("BlueNote"),5);
+					//new KBPalg(loader.get("BlueNote")[0], "Plag",rand.nextInt(getWidth()-50),20);
 				}
 				
 
@@ -340,7 +347,7 @@ public class RidemPangView extends GameView {
 				if (isMainStarted == false) {
 					isMainStarted = true;
 					
-					/*redEffect = new AnimatedGameButton(loader.get("RedEffect"),
+					redEffect = new AnimatedGameButton(loader.get("RedEffect"),
 							loader.get("RedEffect"), 0.02f, 0.02f, 0,
 							getHeight() - 200, 100, getHeight());
 
@@ -394,7 +401,7 @@ public class RidemPangView extends GameView {
 					world.Add((IUpdateable) gameStartButton);
 
 					
-					 뒤로 가기 버튼 
+					// 뒤로 가기 버튼 
 					gameExitButton = new AnimatedGameButton(
 							loader.get("ExitButton"), loader.get("ExitButton"),
 							0.02f, 0.02f, 150, 650, 600, 850);
@@ -416,10 +423,9 @@ public class RidemPangView extends GameView {
 					});
 					world.Add((IDrawable) gameExitButton);
 					world.Add((IControllable) gameExitButton);
-					world.Add((IUpdateable) gameExitButton);*/
+					world.Add((IUpdateable) gameExitButton);
 				}
 				// 메인 상태일때 계속 실행되는 곳
-				
 			}//끝
 			//무조건 실행되는 곳
 			

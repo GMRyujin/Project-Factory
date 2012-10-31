@@ -213,6 +213,39 @@ public final class GameWorld implements IControllable, IDrawable, IUpdateable {
         	//}
         }
         
+        /**
+         * @brief World내의 객체를 모두 삭제한다.
+         * */
+        public void Clear()
+        {
+        	int size = 0;
+        	size = updateList.size();
+        	Iterator<IUpdateable> uitor = updateList.iterator();
+        	while(uitor.hasNext()){
+        		Remove(uitor.next());
+        	}
+        	
+        	size = drawList.size();
+        	Iterator<IDrawable> ditor = drawList.iterator();
+        	while(ditor.hasNext()){
+        		Remove(ditor.next());
+        	}
+        	
+        	size = controllList.size();
+        	Iterator<IControllable> citor = controllList.iterator();
+        	while(citor.hasNext()){
+        		Remove(citor.next());
+        	}
+        	
+        	size = collLis.Size();
+        	Iterator<RigidBody> ritor = collLis.itorator();
+        	while(ritor.hasNext()){
+        		Remove(ritor.next());
+        	}
+       
+        	currentTime = 0;
+        }
+        
         /* interface implements */
         /* @pre : �� ���� ��
          * @post : �׻� 0�� �����Ѵ�.*/
