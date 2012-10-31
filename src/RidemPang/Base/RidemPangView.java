@@ -1,6 +1,7 @@
 package RidemPang.Base;
 
 import java.util.Random;
+import java.util.Timer;
 
 import com.example.ridempang.*;
 import android.content.Context;
@@ -16,6 +17,7 @@ import KeyboardPang.Motion.BitmapMotion;
 import KeyboardPang.Motion.DrawBitmap;
 import RidemPang.Object.RythemBaseObject;
 import RidemPang.Object.RythemNote;
+import RidemPang.Object.TechTimer;
 import Technology.Base.GameView;
 import Technology.Base.GameView.GameThread;
 import Technology.Control.AnimatedGameButton;
@@ -98,11 +100,12 @@ public class RidemPangView extends GameView {
 			});
 			note.addWorld();
 		}
+		
 
 		@Override
 		protected void onInitialize() {
 			InitClearColor(Color.WHITE);
-			GameWorld world = GameWorld.getInstance();
+			GameWorld.getInstance();
 			BitmapLoader loader = BitmapLoader.getInstance();
 
 			loader.put("StartButton", R.drawable.start_button0000);
@@ -318,7 +321,6 @@ public class RidemPangView extends GameView {
 								
 							}
 						}
-
 						@Override
 						public void onActionMove(int x, int y) {
 
@@ -331,16 +333,31 @@ public class RidemPangView extends GameView {
 					world.Add((IDrawable) backButton);
 					world.Add((IControllable) backButton);
 					world.Add((IUpdateable) backButton);
+					
+					TechTimer timer = new TechTimer(1,0);
+					timer.setOnUpdater(new IUpdateable() {
+						@Override
+						public float Update(float timeDelta) {
+							Random rand = new Random();
+							//CreateNote(rand.nextInt(getWidth()-50),0,"BlueNote",currentTime > 10 ? 10 : (int)currentTime);
+							//new RythemNote(50, 0, BitmapLoader.getInstance().get("BlueNote"),5);
+							new KBPalg(BitmapLoader.getInstance().get("BlueNote")[0], "Plag",rand.nextInt(getWidth()-50),20);
+							Log.v("Test","Timer Test");
+							return 0;
+						}
+					});
+					timer.StartTimer();
 
 
 					currentTime = 0;
 				}// 한번만 호출하는 곳(업데이트에서)
 					// 게임이 시작되면 걔속 여기부분이 호출된다.
-				Random rand = new Random();
-				if(currentTime % 5 < 0.09){
-					new RythemNote(rand.nextInt(getWidth()-50), 0, loader.get("BlueNote"),5);
+				
+				//if(currentTime % 5 < 0.09){
+					//new RythemNote(rand.nextInt(getWidth()-50), 0, loader.get("BlueNote"),5);
 					//new KBPalg(loader.get("BlueNote")[0], "Plag",rand.nextInt(getWidth()-50),20);
-				}
+					//CreateNote(rand.nextInt(getWidth()-50),0,"BlueNote",currentTime > 10 ? 10 : (int)currentTime);
+				//}
 				
 
 			} else {// 게임이 멈췄을때 혹은 로고상태일때 (게임에서 메인으로 갔을때)

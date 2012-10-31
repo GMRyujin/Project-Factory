@@ -44,27 +44,32 @@ public final class GameWorld implements IControllable, IDrawable, IUpdateable {
         ArrayList<IUpdateable>                dummyUpdateList                = new ArrayList<IUpdateable>();                //������Ʈ
         CollisionListener                         dummyCollLis                 = new CollisionListener();                        //�浹
         
+        ArrayList<IControllable>         controllListAdder       = new ArrayList<IControllable>();        //��Ʈ��
+        ArrayList<IDrawable>                drawListAdder                = new ArrayList<IDrawable>();                //�׸���
+        ArrayList<IUpdateable>                updateListAdder                = new ArrayList<IUpdateable>();                //������Ʈ
+        CollisionListener                         collLisAdder                 = new CollisionListener();                        //�浹
+        
         
 
         /* ������Ʈ�� �߰��Ѵ�. */
         public void Add(IControllable object){
         	//synchronized (this) {
-                controllList.add(object);
+                controllListAdder.add(object);
         	//}
         }
         public void Add(IDrawable object){
         	//synchronized(this) {
-               drawList.add(object);
+               drawListAdder.add(object);
         	//}
         }
         public void Add(IUpdateable object){
         	//synchronized(this) {
-                updateList.add(object);
+                updateListAdder.add(object);
         	//}
         }
         public void Add(RigidBody object){
         	//synchronized(this) {
-                collLis.Add(object);
+                collLisAdder.Add(object);
         	//}
         }
         
@@ -288,6 +293,18 @@ public final class GameWorld implements IControllable, IDrawable, IUpdateable {
 	    		dummyUpdateList.clear();
 	    		dummyCollLis.Clear();
 	    		
+	    		/* 오브젝트들을 추가한다. */
+	    		itor = updateListAdder.iterator();
+	    		while(itor.hasNext()){
+	    			updateList.add(itor.next());
+	    		}
+	    		ritor = collLisAdder.itorator();
+	    		while(ritor.hasNext()){
+	    			collLis.Add(ritor.next());
+	    		}
+	    		updateListAdder.clear();
+	    		collLisAdder.Clear();
+	    		
 	            //���� ������Ʈ�� ���¸� ������Ʈ ���ְ�..
 	            itor = updateList.iterator();
 	            while(itor.hasNext()){
@@ -325,6 +342,13 @@ public final class GameWorld implements IControllable, IDrawable, IUpdateable {
 	    		}
         		dummyDrawList.clear();
         		
+        		//오브젝트들을 추가한다.
+        		itor = drawListAdder.iterator();
+        		while(itor.hasNext()){
+        			drawList.add(itor.next());
+        		}
+        		drawListAdder.clear();
+        		
                 itor = drawList.iterator();
                 while(itor.hasNext()){
                         itor.next().Draw(canvas);
@@ -356,11 +380,23 @@ public final class GameWorld implements IControllable, IDrawable, IUpdateable {
 	    		dummyControllList.clear();//1회성이므로 반드시 모두 지워준다.
         	//}
         }
+        
+        public void SafeControlAdd()
+        {
+        	Iterator<IControllable> itor;
+    	
+    		itor = controllListAdder.iterator();
+    		while(itor.hasNext()){
+    			controllList.add(itor.next());
+    		}
+    		controllListAdder.clear();
+        }
 
         /* 갑작스런 이벤트 발생에 오류가 생길수있기때문에 동기화 작업을 해준다. */
         public void onActionUp(int x, int y) {
         	//synchronized (this) {
         	SafeControllRemove();//여기에서 목록에있는 업데이트들을 제거한다. 갑작스런 이벤트의 에러를 막기위해서
+        	SafeControlAdd();
                 Iterator<IControllable> itor = controllList.iterator();
                 while(itor.hasNext()){
                         itor.next().onActionUp(x, y);
@@ -372,6 +408,7 @@ public final class GameWorld implements IControllable, IDrawable, IUpdateable {
         public void onActionDown(int x, int y) {
         	//synchronized (this) {
         	SafeControllRemove();//여기에서 목록에있는 업데이트들을 제거한다. 갑작스런 이벤트의 에러를 막기위해서
+        	SafeControlAdd();
                 Iterator<IControllable> itor = controllList.iterator();
                 while(itor.hasNext()){
                         itor.next().onActionDown(x, y);
@@ -382,6 +419,7 @@ public final class GameWorld implements IControllable, IDrawable, IUpdateable {
         public void onActionMove(int x, int y) {
         	//synchronized (this) {
         	SafeControllRemove();//여기에서 목록에있는 업데이트들을 제거한다. 갑작스런 이벤트의 에러를 막기위해서
+        	SafeControlAdd();
                 Iterator<IControllable> itor = controllList.iterator();
                 while(itor.hasNext()){
                         itor.next().onActionMove(x, y);
