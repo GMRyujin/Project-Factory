@@ -340,8 +340,8 @@ public class RidemPangView extends GameView {
 						public float Update(float timeDelta) {
 							Random rand = new Random();
 							//CreateNote(rand.nextInt(getWidth()-50),0,"BlueNote",currentTime > 10 ? 10 : (int)currentTime);
-							//new RythemNote(50, 0, BitmapLoader.getInstance().get("BlueNote"),5);
-							new KBPalg(BitmapLoader.getInstance().get("BlueNote")[0], "Plag",rand.nextInt(getWidth()-50),20);
+							new RythemNote(50, 0, BitmapLoader.getInstance().get("BlueNote"),5);
+							//new KBPalg(BitmapLoader.getInstance().get("BlueNote")[0], "Plag",rand.nextInt(getWidth()-50),20);
 							Log.v("Test","Timer Test");
 							return 0;
 						}

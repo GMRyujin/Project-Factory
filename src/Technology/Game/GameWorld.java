@@ -247,6 +247,11 @@ public final class GameWorld implements IControllable, IDrawable, IUpdateable {
         	while(ritor.hasNext()){
         		Remove(ritor.next());
         	}
+        	
+        	updateListAdder.clear();
+        	controllListAdder.clear();
+        	drawListAdder.clear();
+        	collLisAdder.Clear();
        
         	currentTime = 0;
         }
