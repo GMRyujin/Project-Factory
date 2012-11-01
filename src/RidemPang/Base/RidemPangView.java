@@ -243,7 +243,6 @@ public class RidemPangView extends GameView {
 					});
 					
 					
-					
 					rythemGreenNote = new RythemBaseObject("VioletNote", 100, 50,
 							loader.get("BioletNote"), 0.1f, 200, 100);
 					rythemGreenNote.setOnActionController(new IControllable() {
