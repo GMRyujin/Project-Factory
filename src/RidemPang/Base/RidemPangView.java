@@ -40,6 +40,7 @@ public class RidemPangView extends GameView {
 	}
 
 	/* 리듬팡의 실제 구현부분, 변수는 아래에 선언한다. 쓰레드안에 선언하면 초기화가 되기때문이다 . */
+	/* 리듬게임 */
 	boolean isStart = false;
 	boolean isStarted = false;
 	boolean isMainStarted = false;
