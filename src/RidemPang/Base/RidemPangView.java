@@ -164,25 +164,7 @@ public class RidemPangView extends GameView {
 				if (isStarted == false) {// 한번만 진행한다.
 					isStarted = true;
 					// 로비에서
-					world.Remove((IDrawable) background);
-					world.Remove((IUpdateable) background);
-
-					world.Remove((IDrawable) gameLogo);
-					world.Remove((IUpdateable) gameLogo);
-
-					world.Remove((IDrawable) gameStartButton);
-					world.Remove((IControllable) gameStartButton);
-					world.Remove((IUpdateable) gameStartButton);
-
-					world.Remove((IDrawable) gameExitButton);
-					world.Remove((IControllable) gameExitButton);
-					world.Remove((IUpdateable) gameExitButton);
-
-					world.Add((IDrawable) touchLayer);
-					world.Add((IUpdateable) touchLayer);
-
-					world.Add((IDrawable) redEffect);
-					world.Add((IUpdateable) redEffect);
+					world.Clear();
 					
 					// 메인이 시작되었을때 한번만 호출되는 곳
 					rythemRedNote = new RythemBaseObject("RedNote", 50, 50,
