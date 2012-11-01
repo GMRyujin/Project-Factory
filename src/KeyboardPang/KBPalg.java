@@ -43,7 +43,7 @@ public final class KBPalg extends GameObject{
 			GameWorld world = GameWorld.getInstance();
 			
 			//죽는 모션 생성. 이 클래스는 자동 추가되며, 자동 삭제된다.
-			//new KBPalgDied(GetX(),GetY());
+			new KBPalgDied(GetX(),GetY());
 			
 			world.Remove((IDrawable)this);
 			world.Remove((IUpdateable)this);

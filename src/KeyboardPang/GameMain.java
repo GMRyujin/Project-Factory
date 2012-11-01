@@ -3,14 +3,9 @@
  * */
 package KeyboardPang;
 
-import java.util.Random;
-
-import com.example.ridempang.R;
-
 import KeyboardPang.Motion.BitmapMotion;
 import KeyboardPang.Motion.GameParticleObject;
 import KeyboardPang.Motion.RandomBitmapObject;
-import RidemPang.Object.RythemNote;
 import Technology.Base.GameView;
 import Technology.Control.AnimatedGameButton;
 import Technology.Control.GameButton;
@@ -21,7 +16,6 @@ import Technology.Game.GameWorld;
 import Technology.Interface.IControllable;
 import Technology.Interface.IDrawable;
 import Technology.Interface.IUpdateable;
-import Technology.Util.BitmapLoader;
 import Technology.Util.GameSound;
 import Technology.Util.PrintDebug;
 import android.content.Context;
@@ -116,59 +110,12 @@ public class GameMain extends GameView {
 			world.Add((IDrawable)btn);
 			world.Add((IControllable)btn);
 			world.Add((IUpdateable)btn);*/
-			
-			BitmapLoader loader = BitmapLoader.getInstance();
-
-			loader.put("StartButton", R.drawable.start_button0000);
-			loader.put("StartButton", R.drawable.start_button0001);
-
-			loader.put("ExitButton", R.drawable.exit_button0000);
-			loader.put("ExitButton", R.drawable.exit_button0001);
-			loader.put("ExitButton", R.drawable.exit_button0002);
-			loader.put("ExitButton", R.drawable.exit_button0003);
-
-			loader.put("Logo", R.drawable.rythem_pang0000);
-			loader.put("Logo", R.drawable.rythem_pang0001);
-			loader.put("Logo", R.drawable.rythem_pang0002);
-			loader.put("Logo", R.drawable.rythem_pang0003);
-			loader.put("Logo", R.drawable.rythem_pang0004);
-			loader.put("Logo", R.drawable.rythem_pang0005);
-			/*
-			 * loader.put("Logo",R.drawable.we_are_logo0001);
-			 * loader.put("Logo",R.drawable.we_are_logo0002);
-			 * loader.put("Logo",R.drawable.we_are_logo0003);
-			 */
-
-			loader.put("TouchLayer", R.drawable.touch_layer0000);
-			loader.put("Background", R.drawable.background_small);
-			loader.put("EffectGreen", R.drawable.bloom_effect_green0000);
-			loader.put("RedEffect", R.drawable.bloom_effect_red0000);
-
-			loader.put("BioletNote", R.drawable.biolet_note0000);
-			loader.put("BioletNote", R.drawable.biolet_note0001);
-			loader.put("BioletNote", R.drawable.biolet_note0002);
-			loader.put("BioletNote", R.drawable.biolet_note0003);
-
-			loader.put("BlueNote", R.drawable.blue_note0000);
-			loader.put("BlueNote", R.drawable.blue_note0001);
-			loader.put("BlueNote", R.drawable.blue_note0002);
-			loader.put("BlueNote", R.drawable.blue_note0003);
-
-			loader.put("RedNote", R.drawable.read_note0001);
-			loader.put("RedNote", R.drawable.read_note0002);
-			loader.put("RedNote", R.drawable.read_note0003);
-			loader.put("RedNote", R.drawable.read_note0003);
-
-			loader.put("EffectRedPang", R.drawable.sprite_red_effect_pang0000);
-			
-			loader.put("BackButton", R.drawable.back_button0000);
 		}
 		
 		@Override
 		public void Update(float timeDelta) {
 			/* Main Code*/ 
 			gameTime += timeDelta;//시간을 축적한다.
-			BitmapLoader loader = BitmapLoader.getInstance();
 			if(gameTime > 5.0f){
 				//new KBPalg(TextureBank.LoadPalgBitmap(), "monster",(float) Math.random()*500, (float)Math.random()*500);
 				//new BitmapMotion(TextureBank.userPunch, 10, 10);//펀치 추가
@@ -179,12 +126,6 @@ public class GameMain extends GameView {
 				//new RandomBitmapObject(TextureBank.LoadWallBreak(),10, 50,3);//벽이미지 추가
 				//new BitmapMotion(TextureBank.palgDiedAnim, 10, 20);//펀치가 렉이었다.
 				//new BitmapMotion(TextureBank.LoadUserPunch(), 20, 50);//펀치가 렉이었다.
-				
-				Random rand = new Random();
-				if(gameTime % 5 < 0.09){
-					new RythemNote(rand.nextInt(getWidth()-50), 0, loader.get("BlueNote"),1);
-					//new KBPalg(loader.get("BlueNote")[0], "Plag",rand.nextInt(getWidth()-50),20);
-				}
 				
 				gameTime = 0;
 			}

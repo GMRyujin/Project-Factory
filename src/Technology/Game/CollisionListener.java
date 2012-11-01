@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
-import Technology.Interface.ICollisionable;
 import Technology.Interface.IUpdateable;
 
 /*
@@ -13,9 +12,9 @@ import Technology.Interface.IUpdateable;
  * �� �� ��  �� �������� å���� �� �浹�˻�����̴�. ������Ʈ�� ������Ʈ�� �ƴϴ�.
  * */
 public class CollisionListener implements IUpdateable{
-	ArrayList<RigidBody> rigidList = new ArrayList<RigidBody>();
+	Collection<RigidBody> rigidList = new ArrayList<RigidBody>();
 
-	ArrayList<RigidBody> removeList = new ArrayList<RigidBody>();
+	Collection<RigidBody> removeList = new ArrayList<RigidBody>();
 	
 	public void Add(RigidBody object){
 		rigidList.add(object);
@@ -23,16 +22,6 @@ public class CollisionListener implements IUpdateable{
 	
 	public boolean Remove(RigidBody object){
 		return removeList.add(object);
-	}
-	
-	
-	/* 이것은 위험한 함수이다. World애서만 사용한다. */
-	public void Remove(int i){
-		rigidList.remove(i);
-	}
-	
-	public ICollisionable Get(int i){
-		return rigidList.get(i);
 	}
 	
 	public Iterator<RigidBody> itorator()
@@ -74,13 +63,13 @@ public class CollisionListener implements IUpdateable{
 			}
 		}
 		
-		/* ������ ������Ʈ���� �����Ѵ�. 
+		/* ������ ������Ʈ���� �����Ѵ�. */
 		itor = removeList.iterator();
 		
 		while(itor.hasNext()){
 			rigidList.remove(itor.next());
 		}
-		removeList.clear();*/
+		removeList.clear();
 		
 		
 		return 0;
