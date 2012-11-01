@@ -168,7 +168,11 @@ public class RidemPangView extends GameView {
 				// 게임�로 진행�다.
 				if (isStarted == false) {// �번�진행�다.
 					isStarted = true;
+<<<<<<< HEAD
 					// 로비�서
+=======
+					// 로비에서
+>>>>>>> origin/ExRythemGame
 					world.Remove((IDrawable) background);
 					world.Remove((IUpdateable) background);
 
@@ -198,7 +202,11 @@ public class RidemPangView extends GameView {
 					backButton.setOnActionControl(new IControllable() {
 						@Override
 						public void onActionUp(int x, int y) {
+<<<<<<< HEAD
 							// TODO 게임�작�다.
+=======
+							// TODO 게임을 시작한다.
+>>>>>>> origin/ExRythemGame
 							if(backButton.IsMe(x, y)){
 								TechVibrator.getInstance().vibrate(500);
 							}
@@ -219,18 +227,30 @@ public class RidemPangView extends GameView {
 
 
 					currentTime = 0;
+<<<<<<< HEAD
 				}// �번맸출�는 곅데�트�서)
 					// 게임�작�면 걔속 �기부분이 �출�다.
+=======
+				}// 한번만 호출하는 곳(업데이트에서)
+					// 게임이 시작되면 걔속 여기부분이 호출된다.
+>>>>>>> origin/ExRythemGame
 				Random rand = new Random();
 				if(currentTime % 5 < 0.09){
 					CreateNote(rand.nextInt(getWidth()-50), 0, "BlueNote",(int)(currentTime*0.1) + 1);
 				}
 				
 
+<<<<<<< HEAD
 			} else {// 게임멈췄�때 �� 로고�태�때 (게임�서 메인�로 갔을
 				if (isMainStarted == false) {
 					isMainStarted = true;
 					// 메인�작�었�때 �번맸출�는 �
+=======
+			} else {// 게임이 멈췄을때 혹은 로고상태일때 (게임에서 메인으로 갔을때)
+				if (isMainStarted == false) {
+					isMainStarted = true;
+					// 메인이 시작되었을때 한번만 호출되는 곳
+>>>>>>> origin/ExRythemGame
 					rythemRedNote = new RythemBaseObject("note", 50, 50,
 							loader.get("RedNote"), 0.1f, 200, 100);
 					rythemRedNote.setOnActionController(new IControllable() {
@@ -307,6 +327,10 @@ public class RidemPangView extends GameView {
 					});
 					rythemBlueNote.addWorld();
 					
+<<<<<<< HEAD
+=======
+					
+>>>>>>> origin/ExRythemGame
 					rythemGreenNote = new RythemBaseObject("note", 50, 50,
 							loader.get("BioletNote"), 0.1f, 200, 100);
 					rythemGreenNote.setOnActionController(new IControllable() {
@@ -402,7 +426,11 @@ public class RidemPangView extends GameView {
 					world.Add((IUpdateable) gameStartButton);
 
 					
+<<<<<<< HEAD
 					/* �로 가�버튼 */
+=======
+					/* 뒤로 가기 버튼 */
+>>>>>>> origin/ExRythemGame
 					/*gameExitButton = new AnimatedGameButton(
 							loader.get("ExitButton"), loader.get("ExitButton"),
 							0.02f, 0.02f, 150, 650, 600, 850);
@@ -426,10 +454,17 @@ public class RidemPangView extends GameView {
 					//world.Add((IControllable) gameExitButton);
 					//world.Add((IUpdateable) gameExitButton);
 				}
+<<<<<<< HEAD
 				// 메인 �태�때 계속 �행�는 �
 				
 			}//
 			//무조걤행�는 �
+=======
+				// 메인 상태일때 계속 실행되는 곳
+				
+			}//끝
+			//무조건 실행되는 곳
+>>>>>>> origin/ExRythemGame
 			
 			GameWorld.getInstance().Update(timeDelta);
 		}
