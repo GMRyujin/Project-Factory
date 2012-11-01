@@ -35,7 +35,7 @@ public class RidemPangView extends GameView {
 		return new RidemPangGameThread();
 	}
 
-	/* 리듬�의 �제 구현부� 변�는 �래�언�다. �레�안�언�면 초기�� �기�문�다 . */
+	/* 리듬팡의 실제 구현부분, 변수는 아래에 선언한다. 쓰레드안에 선언하면 초기화가 되기때문이다 . */
 	/* 리듬게임 */
 	boolean isStart = false;
 	boolean isStarted = false;
@@ -162,13 +162,13 @@ public class RidemPangView extends GameView {
 		protected void Update(float timeDelta) {
 			GameWorld world = GameWorld.getInstance();
 			BitmapLoader loader = BitmapLoader.getInstance();
-			currentTime += timeDelta;// �재 게임�간. (게임진행�에 �용�다.)
+			currentTime += timeDelta;// 현재 게임의 시간. (게임이 진행된 후에 사용한다.)
 
-			if (isStart) {// 게임�작�면 모든 버튼�거�다. (�작 버튼�렸�때)
-				// 게임�로 진행�다.
-				if (isStarted == false) {// �번�진행�다.
+			if (isStart) {// 게임이 시작되면 모든 버튼을 제거한다. (시작 버튼이 눌렸을때)
+				// 게임으로 진행한다.
+				if (isStarted == false) {// 한번만 진행한다.
 					isStarted = true;
-					// 로비�서
+					// 로비에서
 					world.Remove((IDrawable) background);
 					world.Remove((IUpdateable) background);
 
@@ -198,7 +198,7 @@ public class RidemPangView extends GameView {
 					backButton.setOnActionControl(new IControllable() {
 						@Override
 						public void onActionUp(int x, int y) {
-							// TODO 게임�작�다.
+							// TODO 게임을 시작한다.
 							if(backButton.IsMe(x, y)){
 								TechVibrator.getInstance().vibrate(500);
 							}
@@ -219,18 +219,18 @@ public class RidemPangView extends GameView {
 
 
 					currentTime = 0;
-				}// �번맸출�는 곅데�트�서)
-					// 게임�작�면 걔속 �기부분이 �출�다.
+				}// 한번만 호출하는 곳(업데이트에서)
+					// 게임이 시작되면 걔속 여기부분이 호출된다.
 				Random rand = new Random();
 				if(currentTime % 5 < 0.09){
 					CreateNote(rand.nextInt(getWidth()-50), 0, "BlueNote",(int)(currentTime*0.1) + 1);
 				}
 				
 
-			} else {// 게임멈췄�때 �� 로고�태�때 (게임�서 메인�로 갔을
+			} else {// 게임이 멈췄을때 혹은 로고상태일때 (게임에서 메인으로 갔을때)
 				if (isMainStarted == false) {
 					isMainStarted = true;
-					// 메인�작�었�때 �번맸출�는 �
+					// 메인이 시작되었을때 한번만 호출되는 곳
 					rythemRedNote = new RythemBaseObject("note", 50, 50,
 							loader.get("RedNote"), 0.1f, 200, 100);
 					rythemRedNote.setOnActionController(new IControllable() {
@@ -307,7 +307,12 @@ public class RidemPangView extends GameView {
 					});
 					rythemBlueNote.addWorld();
 					
+					
+<<<<<<< HEAD
+					rythemGreenNote = new RythemBaseObject("VioletNote", 100, 50,
+=======
 					rythemGreenNote = new RythemBaseObject("note", 50, 50,
+>>>>>>> origin/ExRythemGame
 							loader.get("BioletNote"), 0.1f, 200, 100);
 					rythemGreenNote.setOnActionController(new IControllable() {
 						@Override
@@ -357,7 +362,7 @@ public class RidemPangView extends GameView {
 							loader.get("EffectGreen"), 0.02f, 0.02f, 0,
 							getHeight() - 200, 100, getHeight());
 
-					//�치�이�성
+					//터치레이어 생성
 					touchLayer = new AnimatedGameButton(
 							loader.get("TouchLayer"), loader.get("TouchLayer"),
 							0.02f, 0.02f, 0, getHeight() - 100, getWidth(),
@@ -375,7 +380,7 @@ public class RidemPangView extends GameView {
 					world.Add((IDrawable) gameLogo);
 					world.Add((IUpdateable) gameLogo);
 
-					//게임�작 버튼
+					//게임의 시작 버튼
 					gameStartButton = new AnimatedGameButton(
 							loader.get("StartButton"),
 							loader.get("StartButton"), 0.02f, 0.02f, 150, 1050,
@@ -383,7 +388,7 @@ public class RidemPangView extends GameView {
 					gameStartButton.setOnActionControl(new IControllable() {
 						@Override
 						public void onActionUp(int x, int y) {
-							// TODO 게임�작�다.
+							// TODO 게임을 시작한다.
 							TechVibrator.getInstance().vibrate(500);
 							isStart = true;
 						}
@@ -402,14 +407,14 @@ public class RidemPangView extends GameView {
 					world.Add((IUpdateable) gameStartButton);
 
 					
-					/* �로 가�버튼 */
+					/* 뒤로 가기 버튼 */
 					/*gameExitButton = new AnimatedGameButton(
 							loader.get("ExitButton"), loader.get("ExitButton"),
 							0.02f, 0.02f, 150, 650, 600, 850);
 					gameExitButton.setOnActionControl(new IControllable() {
 						@Override
 						public void onActionUp(int x, int y) {
-							// TODO 게임종료�다.
+							// TODO 게임을 종료한다.
 							ExitGame();
 						}
 
@@ -426,10 +431,10 @@ public class RidemPangView extends GameView {
 					//world.Add((IControllable) gameExitButton);
 					//world.Add((IUpdateable) gameExitButton);
 				}
-				// 메인 �태�때 계속 �행�는 �
+				// 메인 상태일때 계속 실행되는 곳
 				
-			}//
-			//무조걤행�는 �
+			}//끝
+			//무조건 실행되는 곳
 			
 			GameWorld.getInstance().Update(timeDelta);
 		}

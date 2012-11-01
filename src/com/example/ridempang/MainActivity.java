@@ -1,6 +1,5 @@
 package com.example.ridempang;
 
-import KeyboardPang.GameMain;
 import RidemPang.Base.RidemPangView;
 import Technology.Base.TechnologyActivity;
 import android.os.Bundle;
@@ -18,7 +17,7 @@ public class MainActivity extends TechnologyActivity {
         InitTechnologyActivity();
         SetGameView(new RidemPangView(this,true,true));
         Vibrator vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        //vibe.vibrate(500);
+        vibe.vibrate(500);
        //Button btn = new Button(this);
        // GetCurrentLayout().addView(btn);
         

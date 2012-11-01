@@ -22,7 +22,9 @@ Thumbs.db
 *.tlh
 *.bak
 *.cache
+*.tex
 *.ilk
+*.tex
 *.log
 [Bb]in
 [Dd]ebug*/
@@ -32,3 +34,4 @@ obj/
 [Rr]elease*/
 _ReSharper*/
 [Tt]est[Rr]esult*
+latex/classcom_1_1example_1_1ridempang_1_1_build_config.tex
