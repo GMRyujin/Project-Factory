@@ -357,19 +357,21 @@ public class RidemPangView extends GameView {
 					});
 					timer.StartTimer();
 
+					NumberPrinter.getInstance("Score").setOnUpdater(new IUpdateable() {
+						@Override
+						public float Update(float timeDelta) {
+							// 현재의 시간을 출력한다.
+							NumberPrinter.getInstance("Score").SetPrintNumber((int)currentTime);
+							return 0;
+						}
+					});
 					NumberPrinter.getInstance("Score").AddWorld();
-
+					
+					
 					currentTime = 0;
 				}// 한번만 호출하는 곳(업데이트에서)
 					// 게임이 시작되면 걔속 여기부분이 호출된다.
 				
-				//if(currentTime % 5 < 0.09){
-					//new RythemNote(rand.nextInt(getWidth()-50), 0, loader.get("BlueNote"),5);
-					//new KBPalg(loader.get("BlueNote")[0], "Plag",rand.nextInt(getWidth()-50),20);
-					//CreateNote(rand.nextInt(getWidth()-50),0,"BlueNote",currentTime > 10 ? 10 : (int)currentTime);
-				//}
-				
-
 			} else {// 게임이 멈췄을때 혹은 로고상태일때 (게임에서 메인으로 갔을때)
 				if (isMainStarted == false) {
 					isMainStarted = true;
