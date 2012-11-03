@@ -50,6 +50,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
 	private boolean mFlag;
 	private Handler mHandler;
+	
+	//로고를 한번만 출력하게 한다.
+	boolean isShowLogo = false;
 
 	// -------------------------------------
 	// 占쏙옙占쏙옙 (占쏙옙체화占쏙옙占쏙옙 占쏙옙占쏙옙, 占쏙옙占싸그뤄옙 타占쏙옙틀占쏙옙 占쏙옙占쏙옙)
@@ -294,9 +297,6 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 		private int GetFPS() {
 			return fps;
 		}
-
-	
-		
 		
 		/**
 		 * [수정금지]
@@ -312,26 +312,28 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
 			int temp_fps = 0;
 			
-			/* TODO 무조건 Technology 로고가 보이게 한다. //약 2초간 로고를 보여준다. */
-			Bitmap logoBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.tech_logo);
-			try{
-				canvas = mHolder.lockCanvas(); 
-				synchronized (mHolder) { 
-					canvas.drawBitmap(logoBitmap, 
-							new Rect(0,0,logoBitmap.getWidth(),logoBitmap.getHeight()),
-							new Rect(0,0,getWidth(),getHeight()),new Paint(Paint.ANTI_ALIAS_FLAG));
+			if(isShowLogo == false){
+				/* TODO 무조건 Technology 로고가 보이게 한다. //약 2초간 로고를 보여준다. */
+				Bitmap logoBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.tech_logo);
+				try{
+					canvas = mHolder.lockCanvas(); 
+					synchronized (mHolder) { 
+						canvas.drawBitmap(logoBitmap, 
+								new Rect(0,0,logoBitmap.getWidth(),logoBitmap.getHeight()),
+								new Rect(0,0,getWidth(),getHeight()),new Paint(Paint.ANTI_ALIAS_FLAG));
+					}
+				}finally {
+					mHolder.unlockCanvasAndPost(canvas); 
 				}
-			}finally {
-				mHolder.unlockCanvasAndPost(canvas); 
+				
+				try {
+					sleep(2500);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				logoBitmap.recycle();//메모리를 즉시 해제한다.
+				isShowLogo = true;//로고를 한번만 출력하게 한다.
 			}
-			
-			try {
-				sleep(2500);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			logoBitmap.recycle();//메모리를 즉시 해제한다.
-			
 
 			/* 로고 출력이 끝나고.. 게임의 루프이다. */
 			try {
