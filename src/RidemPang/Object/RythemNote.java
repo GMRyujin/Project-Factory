@@ -11,7 +11,7 @@ public class RythemNote extends RythemBaseObject {
 	float dy=0;
 
 	public RythemNote(float cx, float cy, Bitmap[] bitmap,final float dy) {
-		super("note", cx, cy,bitmap, 0.3f ,200, 100);
+		super("note", cx, cy,bitmap, 0.3f ,100, 50);
 		{
 			GameWorld world = GameWorld.getInstance();
 			this.dy = dy;

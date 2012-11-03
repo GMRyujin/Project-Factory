@@ -1,0 +1,82 @@
+	RythemBaseObject 를 이용해서 노트 추가하기
+	
+	RythemBaseObject rythemGreenNote = new RythemBaseObject("VioletNote", 100, 50,
+							loader.get("BioletNote"), 0.1f, 200, 100);
+					rythemGreenNote.setOnActionController(new IControllable() {
+						@Override
+						public void onActionUp(int x, int y) {
+							if (rythemGreenNote.IsMe(x, y)) {
+								Log.v("RTest", "OnClick");
+								new BitmapMotion(BitmapLoader.getInstance()
+										.get("EffectRedPang"), rythemGreenNote
+										.GetX(), rythemGreenNote.GetY());
+								rythemGreenNote.removeWorld();
+							}
+						}
+
+						@Override
+						public void onActionMove(int x, int y) {
+							if (rythemGreenNote.IsMe(x, y)) {
+								Log.v("RTest", "OnMove");
+							}
+						}
+
+						@Override
+						public void onActionDown(int x, int y) {
+							if (rythemGreenNote.IsMe(x, y)) {
+								Log.v("RTest", "OnDown");
+							}
+						}
+					});
+					
+					rythemGreenNote.addWorld();
+					
+
+//**************************************************************************************///
+					AnimatedGameButton을 사용해서 애니메이션 버튼 생성하기.
+					
+					
+					AnimatedGameButton backButton = new AnimatedGameButton(
+							loader.get("BackButton"),
+							loader.get("BackButton"), 0.02f, 0.02f, 
+							getWidth()-100, 0,50,50);
+					backButton.setOnActionControl(new IControllable() {
+						@Override
+						public void onActionUp(int x, int y) {
+							// TODO 게임을 시작한다.
+							if(backButton.IsMe(x, y)){
+								TechVibrator.getInstance().vibrate(500);
+								
+								//게임의 설정을 초기화 한다.
+								GameWorld.getInstance().Clear();
+								isMainStarted = false;
+								isStart = false;
+								isStarted = false;
+								
+							}
+						}
+						@Override
+						public void onActionMove(int x, int y) {
+
+						}
+
+						@Override
+						public void onActionDown(int x, int y) {
+						}
+					});
+					world.Add((IDrawable) backButton);
+					world.Add((IControllable) backButton);
+					world.Add((IUpdateable) backButton);
+					
+					
+//**************************************************************************************///
+					넘버 프린터 사용하기
+					
+						NumberPrinter.getInstance("Score").setOnUpdater(new IUpdateable() {
+						@Override
+						public float Update(float timeDelta) {
+							// 현재의 시간을 출력한다.
+							NumberPrinter.getInstance("Score").SetPrintNumber((int)currentTime);
+							return 0;
+						}
+					});

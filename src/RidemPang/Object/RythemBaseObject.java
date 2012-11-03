@@ -65,7 +65,6 @@ public class RythemBaseObject extends BaseObject  implements IDrawable, IControl
 		GameWorld world = GameWorld.getInstance();
 		world.Add((IDrawable)this);
 		world.Add((IUpdateable)this);
-		world.Add((RigidBody)this);
 		world.Add((IControllable)this);
 	}
 	/**
@@ -76,7 +75,6 @@ public class RythemBaseObject extends BaseObject  implements IDrawable, IControl
 		Log.v("Debug","제거" + this.hashCode());
 		world.Remove((IDrawable)this);
 		world.Remove((IUpdateable)this);
-		world.Remove((RigidBody)this);
 		world.Remove((IControllable)this);
 	}
 	

@@ -88,6 +88,13 @@ public class NumberPrinter implements IUpdateable, IDrawable {
 		this.num = num;
 	}
 	
+	/**
+	 * @brief 자신의 숫자를 반환한다.
+	 * */
+	public int GetPrintNumber(){
+		return num;
+	}
+	
 	private NumberPrinter(float x,float y,float width,float height){
 		SetPosition(x,y);
 		SetSize(width,height);

@@ -51,24 +51,22 @@ public class RidemPangView extends GameView {
 	AnimatedGameButton gameExitButton;
 	AnimatedGameButton touchLayer;
 	
-
 	AnimatedGameButton greenEffect;
 	AnimatedGameButton redEffect;
 
-	private RythemBaseObject rythemRedNote;
-	private RythemBaseObject rythemBlueNote;
-	private RythemBaseObject rythemGreenNote;
-	
 	private AnimatedGameButton backButton;
+	
+	private RythemBaseObject rythemLine;
+	
 
 	float currentTime = 0;
 
 	class RidemPangGameThread extends GameView.GameThread {
 		
 
-		public void CreateNote(float x, float y, String noteName,final int dy) {
+		public void CreateNote(float x, float y, String noteName,final float dy) {
 			final RythemBaseObject note = new RythemBaseObject("note", x, y,
-					BitmapLoader.getInstance().get(noteName), 0.4f, 200, 100);
+					BitmapLoader.getInstance().get(noteName), 100, 100, 50);
 			note.setOnActionController(new IControllable() {
 				@Override
 				public void onActionUp(int x, int y) {
@@ -86,8 +84,15 @@ public class RidemPangView extends GameView {
 
 				@Override
 				public void onActionDown(int x, int y) {
+					//선 아래에 노트가 있는지 검사한다. 80퍼센트 보다 아래있으면 클릭을 허락한다.
+					if(getHeight()*80/100 -50 > note.GetY()) return;
+					
 					if (note.IsMe(x, y)) {
 						Log.v("RTest", "OnDown");
+						//TODO 만일 개체가 선택되었을떄 스코어를 올린다.
+						NumberPrinter printer = NumberPrinter.getInstance("Score");
+						int score = printer.GetPrintNumber();
+						printer.SetPrintNumber(score + (int)dy*10);
 						note.removeWorld();
 					}
 				}
@@ -96,16 +101,47 @@ public class RidemPangView extends GameView {
 				@Override
 				public float Update(float timeDelta) {
 					note.SetPos(note.GetX(),note.GetY() + dy);
+					
+					//TODO 핸드폰의 높이를 넘어가면 알아서 자동 삭제
+					//if(note.GetY()+100 > getHeight()){
+					//	note.removeWorld();
+					//}
 					return 0;
 				}
 			});
 			note.addWorld();
 		}
 		
+		public void RandomCreateNote(float dy)
+		{
+			Random random = new Random();
+			int ranInt = random.nextInt(2);
+
+
+			float sx;
+			
+			do{
+				sx = random.nextFloat()*((float)getWidth()-100);
+			}while(sx+100 > getWidth());
+			
+			switch(ranInt){
+			case 0:
+				CreateNote(sx,0,"BlueNote",dy);
+				break;
+			case 1:
+				CreateNote(sx,0,"RedNote",dy);
+				break;
+			case 2:
+				CreateNote(sx,0,"BioletNote",dy);
+				break;
+			}
+			
+		}
+		
 
 		@Override
 		protected void onInitialize() {
-			InitClearColor(Color.WHITE);
+			InitClearColor(Color.BLACK);
 			GameWorld.getInstance();
 			BitmapLoader loader = BitmapLoader.getInstance();
 
@@ -123,11 +159,6 @@ public class RidemPangView extends GameView {
 			loader.put("Logo", R.drawable.rythem_pang0003);
 			loader.put("Logo", R.drawable.rythem_pang0004);
 			loader.put("Logo", R.drawable.rythem_pang0005);
-			/*
-			 * loader.put("Logo",R.drawable.we_are_logo0001);
-			 * loader.put("Logo",R.drawable.we_are_logo0002);
-			 * loader.put("Logo",R.drawable.we_are_logo0003);
-			 */
 
 			loader.put("TouchLayer", R.drawable.touch_layer0000);
 			loader.put("Background", R.drawable.background_small);
@@ -135,24 +166,12 @@ public class RidemPangView extends GameView {
 			loader.put("RedEffect", R.drawable.bloom_effect_red0000);
 
 			loader.put("BioletNote", R.drawable.biolet_note0000);
-			loader.put("BioletNote", R.drawable.biolet_note0001);
-			loader.put("BioletNote", R.drawable.biolet_note0002);
-			loader.put("BioletNote", R.drawable.biolet_note0003);
-
 			loader.put("BlueNote", R.drawable.blue_note0000);
-			loader.put("BlueNote", R.drawable.blue_note0001);
-			loader.put("BlueNote", R.drawable.blue_note0002);
-			loader.put("BlueNote", R.drawable.blue_note0003);
-
 			loader.put("RedNote", R.drawable.read_note0001);
-			loader.put("RedNote", R.drawable.read_note0002);
-			loader.put("RedNote", R.drawable.read_note0003);
-			loader.put("RedNote", R.drawable.read_note0003);
 
 			loader.put("EffectRedPang", R.drawable.sprite_red_effect_pang0000);
 			
 			loader.put("BackButton", R.drawable.back_button0000);
-			
 			loader.put("GameNumber0",R.drawable.number0);
 			loader.put("GameNumber1",R.drawable.number1);
 			loader.put("GameNumber2",R.drawable.number2);
@@ -164,8 +183,10 @@ public class RidemPangView extends GameView {
 			loader.put("GameNumber8",R.drawable.number8);
 			loader.put("GameNumber9",R.drawable.number9);
 			
+			loader.put("Line", R.drawable.line);
 			
-			NumberPrinter printer = NumberPrinter.getInstance("Score",100,10,30,50);
+			
+			NumberPrinter printer = NumberPrinter.getInstance("Score",getWidth()*40/100,10,30,50);
 			printer.SetNumberImage(0, 1, "GameNumber0");
 			printer.SetNumberImage(1, 1, "GameNumber1");
 			printer.SetNumberImage(2, 1, "GameNumber2");
@@ -176,8 +197,6 @@ public class RidemPangView extends GameView {
 			printer.SetNumberImage(7, 1, "GameNumber7");
 			printer.SetNumberImage(8, 1, "GameNumber8");
 			printer.SetNumberImage(9, 1, "GameNumber9");
-			//printer.SetPrintNumber(1234567890);
-			//printer.AddWorld();
 		}
 
 		@Override
@@ -193,128 +212,10 @@ public class RidemPangView extends GameView {
 					// 로비에서
 					world.Clear();
 					
-					// 메인이 시작되었을때 한번만 호출되는 곳
-					rythemRedNote = new RythemBaseObject("RedNote", 50, 50,
-							loader.get("RedNote"), 0.1f, 200, 100);
-					rythemRedNote.setOnActionController(new IControllable() {
-						@Override
-						public void onActionUp(int x, int y) {
-							if (rythemRedNote.IsMe(x, y)) {
-								Log.v("RTest", "OnClick");
-								new BitmapMotion(BitmapLoader.getInstance()
-										.get("EffectRedPang"), rythemRedNote
-										.GetX(), rythemRedNote.GetY());
-								rythemRedNote.removeWorld();
-							}
-						}
-
-						@Override
-						public void onActionMove(int x, int y) {
-							if (rythemRedNote.IsMe(x, y)) {
-								Log.v("RTest", "OnMove");
-							}
-						}
-
-						@Override
-						public void onActionDown(int x, int y) {
-							if (rythemRedNote.IsMe(x, y)) {
-								Log.v("RTest", "OnDown");
-							}
-						}
-					});
-					rythemRedNote.setOnUpdater(new IUpdateable() {
-						@Override
-						public float Update(float timeDelta) {
-							rythemRedNote.SetPos(rythemRedNote.GetX(),
-									rythemRedNote.GetY() + 1);
-							return 0;
-						}
-					});
-					
-					rythemBlueNote = new RythemBaseObject("BlueNote", 150, 50,
-							loader.get("BlueNote"), 0.1f, 200, 100);
-					rythemBlueNote.setOnActionController(new IControllable() {
-						@Override
-						public void onActionUp(int x, int y) {
-							if (rythemBlueNote.IsMe(x, y)) {
-								Log.v("RTest", "OnClick");
-								new BitmapMotion(BitmapLoader.getInstance()
-										.get("EffectRedPang"), rythemBlueNote
-										.GetX(), rythemBlueNote.GetY());
-								rythemBlueNote.removeWorld();
-							}
-						}
-
-						@Override
-						public void onActionMove(int x, int y) {
-							if (rythemBlueNote.IsMe(x, y)) {
-								Log.v("RTest", "OnMove");
-							}
-						}
-
-						@Override
-						public void onActionDown(int x, int y) {
-							if (rythemBlueNote.IsMe(x, y)) {
-								Log.v("RTest", "OnDown");
-							}
-						}
-					});
-					rythemBlueNote.setOnUpdater(new IUpdateable() {
-						@Override
-						public float Update(float timeDelta) {
-							rythemBlueNote.SetPos(rythemBlueNote.GetX(),
-									rythemBlueNote.GetY() + 1);
-							return 0;
-						}
-					});
-					
-					
-					
-					rythemGreenNote = new RythemBaseObject("VioletNote", 100, 50,
-							loader.get("BioletNote"), 0.1f, 200, 100);
-					rythemGreenNote.setOnActionController(new IControllable() {
-						@Override
-						public void onActionUp(int x, int y) {
-							if (rythemGreenNote.IsMe(x, y)) {
-								Log.v("RTest", "OnClick");
-								new BitmapMotion(BitmapLoader.getInstance()
-										.get("EffectRedPang"), rythemGreenNote
-										.GetX(), rythemGreenNote.GetY());
-								rythemGreenNote.removeWorld();
-							}
-						}
-
-						@Override
-						public void onActionMove(int x, int y) {
-							if (rythemGreenNote.IsMe(x, y)) {
-								Log.v("RTest", "OnMove");
-							}
-						}
-
-						@Override
-						public void onActionDown(int x, int y) {
-							if (rythemGreenNote.IsMe(x, y)) {
-								Log.v("RTest", "OnDown");
-							}
-						}
-					});
-					rythemGreenNote.setOnUpdater(new IUpdateable() {
-						@Override
-						public float Update(float timeDelta) {
-							rythemGreenNote.SetPos(rythemGreenNote.GetX(),
-									rythemGreenNote.GetY() + 1);
-							return 0;
-						}
-					});
-
-					rythemRedNote.addWorld();
-					rythemBlueNote.addWorld();
-					rythemGreenNote.addWorld();
-					
 					backButton = new AnimatedGameButton(
 							loader.get("BackButton"),
 							loader.get("BackButton"), 0.02f, 0.02f, 
-							getWidth()-100, 0,getWidth(),50);
+							getWidth()-100, 0,getWidth(),100);
 					backButton.setOnActionControl(new IControllable() {
 						@Override
 						public void onActionUp(int x, int y) {
@@ -343,36 +244,40 @@ public class RidemPangView extends GameView {
 					world.Add((IControllable) backButton);
 					world.Add((IUpdateable) backButton);
 					
-					TechTimer timer = new TechTimer(1,0);
+					
+					// TODO 노트를 출력하는 타이머이다.
+					TechTimer timer = new TechTimer(2,0);
 					timer.setOnUpdater(new IUpdateable() {
 						@Override
 						public float Update(float timeDelta) {
 							Random rand = new Random();
 							//CreateNote(rand.nextInt(getWidth()-50),0,"BlueNote",currentTime > 10 ? 10 : (int)currentTime);
-							new RythemNote(50, 0, BitmapLoader.getInstance().get("BlueNote"),5);
+							//new RythemNote(50, 0, BitmapLoader.getInstance().get("BlueNote"),5);
 							//new KBPalg(BitmapLoader.getInstance().get("BlueNote")[0], "Plag",rand.nextInt(getWidth()-50),20);
+							//CreateNote(50, 0, "BlueNote", 1);
+							RandomCreateNote(2);
 							Log.v("Test","Timer Test");
 							return 0;
 						}
 					});
 					timer.StartTimer();
-
-					NumberPrinter.getInstance("Score").setOnUpdater(new IUpdateable() {
-						@Override
-						public float Update(float timeDelta) {
-							// 현재의 시간을 출력한다.
-							NumberPrinter.getInstance("Score").SetPrintNumber((int)currentTime);
-							return 0;
-						}
-					});
+					
+					// TODO 스코어 출력을 위해 NumberPrinter 객체를 월드에 추가한다.
 					NumberPrinter.getInstance("Score").AddWorld();
+					
+					// TODO 라인을 추가함. 전체 크기의 약 80% 에 위치함.
+					rythemLine = new RythemBaseObject("line", 0, getHeight()*80/100,loader.get("Line"),100,getWidth(),20);
+					rythemLine.addWorld();
+			
 					
 					
 					currentTime = 0;
-				}// 한번만 호출하는 곳(업데이트에서)
+				}// TODO 한번만 호출하는 곳(업데이트에서)
 					// 게임이 시작되면 걔속 여기부분이 호출된다.
 				
-			} else {// 게임이 멈췄을때 혹은 로고상태일때 (게임에서 메인으로 갔을때)
+				
+			} else {// TODO 게임이 멈췄을때 혹은 로고상태일때 (게임에서 메인으로 갔을때)
+				
 				if (isMainStarted == false) {
 					isMainStarted = true;
 					
