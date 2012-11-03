@@ -264,6 +264,10 @@ public final class GameWorld implements IControllable, IDrawable, IUpdateable {
         	//synchronized (this) {
 	    		int size = 0;
 	    		
+	    		//TODO 터치 명령어는 여기서 삭제, 추가한다. 여기에 추가하니까 터치를 한후 팅기는 버그가 사라졌다.
+	    		SafeControllRemove();
+	    		SafeControlAdd();
+	    		
 	    		//여기에서 목록에있는 업데이트들을 제거한다. 갑작스런 이벤트의 에러를 막기위해서
 	    		size = updateList.size();
 	    		Iterator<IUpdateable> itor = dummyUpdateList.iterator();
@@ -322,7 +326,6 @@ public final class GameWorld implements IControllable, IDrawable, IUpdateable {
         	//}
             return 0;
         }
-
 
         public void Draw(Canvas canvas) {
         	//synchronized (this) {
@@ -400,32 +403,35 @@ public final class GameWorld implements IControllable, IDrawable, IUpdateable {
 
         /* 갑작스런 이벤트 발생에 오류가 생길수있기때문에 동기화 작업을 해준다. */
         public void onActionUp(int x, int y) {
-			SafeControllRemove();// 여기에서 목록에있는 업데이트들을 제거한다. 갑작스런 이벤트의 에러를 막기위해서
-			Iterator<IControllable> itor = controllList.iterator();
+        	//TODO 노트가 일정이상 아래로 내려가도록 하면 삭제하도록 하였다. 그러나 한참을 그렇게 기다린후 갑작스럽게 터치를 하면 튕기는 문제가 사라졌다. 
+        	//이것의 해결 방법은 World의 update 문으로 이벤트의 추가 삭제 로직을 옮겼다. 아마도 예상되는 문제는 역시 SafeControlAdd문제로써 쓰레드간 동기화의 문제인것 같다.
+			//SafeControllRemove();// 여기에서 목록에있는 업데이트들을 제거한다. 갑작스런 이벤트의 에러를 막기위해서
+			//SafeControlAdd(); //TODO 전체 터치 이벤트를 추가하는 로직을 Add가 앞쪽으로 오도록 수정하였따. 
+			Iterator<IControllable> itor = controllList.iterator();	
 			while (itor.hasNext()) {
 				itor.next().onActionUp(x, y);
 			}
-			SafeControlAdd();
+			
         }
 
 
         public void onActionDown(int x, int y) {
-			SafeControllRemove();// 여기에서 목록에있는 업데이트들을 제거한다. 갑작스런 이벤트의 에러를 막기위해서
-	
+			//SafeControllRemove();// 여기에서 목록에있는 업데이트들을 제거한다. 갑작스런 이벤트의 에러를 막기위해서 여기에
+			//SafeControlAdd();
 			Iterator<IControllable> itor = controllList.iterator();
 			while (itor.hasNext()) {
 				itor.next().onActionDown(x, y);
 			}
-			SafeControlAdd();
+			
         }
 
         public void onActionMove(int x, int y) {
-			SafeControllRemove();// 여기에서 목록에있는 업데이트들을 제거한다. 갑작스런 이벤트의 에러를 막기위해서
-	
+			//SafeControllRemove();// 여기에서 목록에있는 업데이트들을 제거한다. 갑작스런 이벤트의 에러를 막기위해서
+			//SafeControlAdd();
 			Iterator<IControllable> itor = controllList.iterator();
 			while (itor.hasNext()) {
 				itor.next().onActionMove(x, y);
 			}
-			SafeControlAdd();
+			
         }
 }

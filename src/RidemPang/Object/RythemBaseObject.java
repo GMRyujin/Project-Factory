@@ -136,8 +136,8 @@ public class RythemBaseObject extends BaseObject  implements IDrawable, IControl
 	
 	@Override
 	public float Update(float timeDelta) {
-		if(update != null) update.Update(timeDelta);
 		spriteEx.Update(timeDelta);
+		if(update != null) update.Update(timeDelta);
 		return timeDelta;
 	}
 }

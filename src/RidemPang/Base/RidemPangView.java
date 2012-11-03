@@ -102,10 +102,10 @@ public class RidemPangView extends GameView {
 				public float Update(float timeDelta) {
 					note.SetPos(note.GetX(),note.GetY() + dy);
 					
-					//TODO 핸드폰의 높이를 넘어가면 알아서 자동 삭제
-					//if(note.GetY()+100 > getHeight()){
-					//	note.removeWorld();
-					//}
+					//TODO 핸드폰의 높이를 넘어가면 알아서 자동 삭제 Bug : 갑자기 터치를 하면 멈춘다.
+					if(note.GetY()+100 > getHeight()){
+						note.removeWorld();
+					}
 					return 0;
 				}
 			});
@@ -115,7 +115,7 @@ public class RidemPangView extends GameView {
 		public void RandomCreateNote(float dy)
 		{
 			Random random = new Random();
-			int ranInt = random.nextInt(2);
+			int ranInt = random.nextInt(3);
 
 
 			float sx;
