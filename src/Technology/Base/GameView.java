@@ -326,7 +326,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 			}
 			
 			try {
-				sleep(2000);
+				sleep(2500);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
