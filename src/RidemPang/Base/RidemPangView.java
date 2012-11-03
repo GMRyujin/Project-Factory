@@ -26,6 +26,7 @@ import Technology.Interface.IControllable;
 import Technology.Interface.IDrawable;
 import Technology.Interface.IUpdateable;
 import Technology.Util.BitmapLoader;
+import Technology.Util.NumberPrinter;
 import Technology.Util.TechVibrator;
 
 public class RidemPangView extends GameView {
@@ -151,6 +152,32 @@ public class RidemPangView extends GameView {
 			loader.put("EffectRedPang", R.drawable.sprite_red_effect_pang0000);
 			
 			loader.put("BackButton", R.drawable.back_button0000);
+			
+			loader.put("GameNumber0",R.drawable.number0);
+			loader.put("GameNumber1",R.drawable.number1);
+			loader.put("GameNumber2",R.drawable.number2);
+			loader.put("GameNumber3",R.drawable.number3);
+			loader.put("GameNumber4",R.drawable.number4);
+			loader.put("GameNumber5",R.drawable.number5);
+			loader.put("GameNumber6",R.drawable.number6);
+			loader.put("GameNumber7",R.drawable.number7);
+			loader.put("GameNumber8",R.drawable.number8);
+			loader.put("GameNumber9",R.drawable.number9);
+			
+			
+			NumberPrinter printer = NumberPrinter.getInstance("Score",100,10,30,50);
+			printer.SetNumberImage(0, 1, "GameNumber0");
+			printer.SetNumberImage(1, 1, "GameNumber1");
+			printer.SetNumberImage(2, 1, "GameNumber2");
+			printer.SetNumberImage(3, 1, "GameNumber3");
+			printer.SetNumberImage(4, 1, "GameNumber4");
+			printer.SetNumberImage(5, 1, "GameNumber5");
+			printer.SetNumberImage(6, 1, "GameNumber6");
+			printer.SetNumberImage(7, 1, "GameNumber7");
+			printer.SetNumberImage(8, 1, "GameNumber8");
+			printer.SetNumberImage(9, 1, "GameNumber9");
+			//printer.SetPrintNumber(1234567890);
+			//printer.AddWorld();
 		}
 
 		@Override
@@ -330,6 +357,7 @@ public class RidemPangView extends GameView {
 					});
 					timer.StartTimer();
 
+					NumberPrinter.getInstance("Score").AddWorld();
 
 					currentTime = 0;
 				}// 한번만 호출하는 곳(업데이트에서)
@@ -423,18 +451,23 @@ public class RidemPangView extends GameView {
 					world.Add((IDrawable) gameExitButton);
 					world.Add((IControllable) gameExitButton);
 					world.Add((IUpdateable) gameExitButton);
+					
+					//NumberPrinter.getInstance("Score").AddWorld();
 				}
 				// 메인 상태일때 계속 실행되는 곳
 			}//끝
 			//무조건 실행되는 곳
-			
+			//NumberPrinter.getInstance("Score").Update(timeDelta);
+			//TODO TEST
 			GameWorld.getInstance().Update(timeDelta);
 		}
 
 		@Override
 		protected void Draw(Canvas canvas) {
 			Clear(canvas);
+			//TODO TEST
 			GameWorld.getInstance().Draw(canvas);
+			//NumberPrinter.getInstance("Score").Draw(canvas);
 		}
 	}
 

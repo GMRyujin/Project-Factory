@@ -47,12 +47,12 @@ public class SpriteEx extends Sprite {
 	public void Draw(Canvas canvas,Rect dst,Paint paint){
 		assert(currentBitmap == null);
 		
-		Log.v("TempBitmap",""+ tempBitmap.getWidth());
-		Log.v("TempBitmap",""+ tempBitmap.getHeight());
+		//Log.v("TempBitmap",""+ tempBitmap.getWidth());
+		//Log.v("TempBitmap",""+ tempBitmap.getHeight());
 		
 		if(tempBitmap != null){
-			Log.v("TempBitmap",""+ tempBitmap.getWidth());
-			Log.v("TempBitmap",""+ tempBitmap.getHeight());
+			//Log.v("TempBitmap",""+ tempBitmap.getWidth());
+			//Log.v("TempBitmap",""+ tempBitmap.getHeight());
 			canvas.drawBitmap(tempBitmap,new Rect(0,0,
 					tempBitmap.getWidth(),tempBitmap.getHeight()),
 					dst,
