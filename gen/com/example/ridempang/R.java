@@ -55,11 +55,12 @@ public final class R {
         public static final int sprite_red_effect_pang0000=0x7f020029;
         public static final int start_button0000=0x7f02002a;
         public static final int start_button0001=0x7f02002b;
-        public static final int touch_layer0000=0x7f02002c;
-        public static final int we_are_logo0000=0x7f02002d;
-        public static final int we_are_logo0001=0x7f02002e;
-        public static final int we_are_logo0002=0x7f02002f;
-        public static final int we_are_logo0003=0x7f020030;
+        public static final int tech_logo=0x7f02002c;
+        public static final int touch_layer0000=0x7f02002d;
+        public static final int we_are_logo0000=0x7f02002e;
+        public static final int we_are_logo0001=0x7f02002f;
+        public static final int we_are_logo0002=0x7f020030;
+        public static final int we_are_logo0003=0x7f020031;
     }
     public static final class id {
         public static final int menu_settings=0x7f080000;

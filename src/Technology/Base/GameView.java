@@ -3,6 +3,8 @@ package Technology.Base;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import com.example.ridempang.R;
+
 import Technology.Game.GameWorld;
 import Technology.Util.BitmapLoader;
 import Technology.Util.GameSound;
@@ -11,11 +13,13 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
@@ -291,6 +295,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 			return fps;
 		}
 
+	
+		
+		
 		/**
 		 * [수정금지]
 		 * Thread run(프레임 동기화 기술)
@@ -304,8 +311,29 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 			long sumTime = 0;
 
 			int temp_fps = 0;
+			
+			/* TODO 무조건 Technology 로고가 보이게 한다. //약 2초간 로고를 보여준다. */
+			Bitmap logoBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.tech_logo);
+			try{
+				canvas = mHolder.lockCanvas(); 
+				synchronized (mHolder) { 
+					canvas.drawBitmap(logoBitmap, 
+							new Rect(0,0,logoBitmap.getWidth(),logoBitmap.getHeight()),
+							new Rect(0,0,getWidth(),getHeight()),new Paint(Paint.ANTI_ALIAS_FLAG));
+				}
+			}finally {
+				mHolder.unlockCanvasAndPost(canvas); 
+			}
+			
+			try {
+				sleep(2000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			logoBitmap.recycle();//메모리를 즉시 해제한다.
+			
 
-			/* 게임의 루프이다. */
+			/* 로고 출력이 끝나고.. 게임의 루프이다. */
 			try {
 				while (!Thread.currentThread().isInterrupted()) {//액티비티가 백그라운드로 가게되면 인터럽트가 일어난다.
 					// 쓰레드가 일시정지 하는 지점
