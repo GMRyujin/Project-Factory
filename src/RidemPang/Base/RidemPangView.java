@@ -12,6 +12,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.SurfaceHolder;
 import KeyboardPang.KBPalg;
 import KeyboardPang.Motion.BitmapMotion;
 import KeyboardPang.Motion.DrawBitmap;
@@ -27,6 +28,7 @@ import Technology.Interface.IDrawable;
 import Technology.Interface.IUpdateable;
 import Technology.Util.BitmapLoader;
 import Technology.Util.GameSound;
+import Technology.Util.MusicPlayer;
 import Technology.Util.NumberPrinter;
 import Technology.Util.TechVibrator;
 
@@ -159,6 +161,8 @@ public class RidemPangView extends GameView {
 			sound.Load("Gun3", R.raw.combo_3);
 			sound.Load("Gun4", R.raw.combo_4);
 			sound.Load("Gun5", R.raw.combo_5);
+			
+			MusicPlayer.put("bgm", R.raw.bgm);
 			
 			BitmapLoader loader = BitmapLoader.getInstance();
 
@@ -351,7 +355,10 @@ public class RidemPangView extends GameView {
 						@Override
 						public void onActionUp(int x, int y) {
 							// TODO 게임을 시작한다.
-							GameSound.getInstance().Play("bgm", 10, 10, 0, 1);
+							//GameSound.getInstance().Play("bgm", 10, 10, 1, 1);
+							MusicPlayer.get("bgm").start();
+							MusicPlayer.get("bgm").setLooping(true);
+							
 							TechVibrator.getInstance().vibrate(500);
 							isStart = true;
 						
@@ -405,6 +412,8 @@ public class RidemPangView extends GameView {
 			GameWorld.getInstance().Update(timeDelta);
 		}
 
+		
+		
 		@Override
 		protected void Draw(Canvas canvas) {
 			Clear(canvas);
@@ -413,5 +422,14 @@ public class RidemPangView extends GameView {
 			//NumberPrinter.getInstance("Score").Draw(canvas);
 		}
 	}
+
+	@Override
+	public void surfaceDestroyed(SurfaceHolder holder) {
+		// TODO Auto-generated method stub
+		super.surfaceDestroyed(holder);
+		MusicPlayer.get("bgm").stop();
+	}
+	
+	
 
 }

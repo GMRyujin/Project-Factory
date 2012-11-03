@@ -8,6 +8,7 @@ import com.example.ridempang.R;
 import Technology.Game.GameWorld;
 import Technology.Util.BitmapLoader;
 import Technology.Util.GameSound;
+import Technology.Util.MusicPlayer;
 import Technology.Util.TechVibrator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -70,6 +71,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 		
 		/* 바이브레이터를 구한다. */
 		TechVibrator.init(mActivity);
+		
+		/* 뮤직 플레이어를 초기화한다. */
+		MusicPlayer.Init(context);
 		
 		
 		// mHolder를 가져온다.
