@@ -26,6 +26,7 @@ import Technology.Interface.IControllable;
 import Technology.Interface.IDrawable;
 import Technology.Interface.IUpdateable;
 import Technology.Util.BitmapLoader;
+import Technology.Util.GameSound;
 import Technology.Util.NumberPrinter;
 import Technology.Util.TechVibrator;
 
@@ -94,6 +95,7 @@ public class RidemPangView extends GameView {
 						int score = printer.GetPrintNumber();
 						printer.SetPrintNumber(score + (int)dy*10);
 						note.removeWorld();
+						GameSound.getInstance().Play("Gun1", 10, 10, 0, 1);
 					}
 				}
 			});
@@ -103,7 +105,7 @@ public class RidemPangView extends GameView {
 					note.SetPos(note.GetX(),note.GetY() + dy);
 					
 					//TODO 핸드폰의 높이를 넘어가면 알아서 자동 삭제 Bug : 갑자기 터치를 하면 멈춘다.
-					if(note.GetY()+100 > getHeight()){
+					if(note.GetY() -100 > getHeight()){
 						note.removeWorld();
 					}
 					return 0;
@@ -116,7 +118,6 @@ public class RidemPangView extends GameView {
 		{
 			Random random = new Random();
 			int ranInt = random.nextInt(3);
-
 
 			float sx;
 			
@@ -143,6 +144,14 @@ public class RidemPangView extends GameView {
 		protected void onInitialize() {
 			InitClearColor(Color.BLACK);
 			GameWorld.getInstance();
+			
+			GameSound sound = GameSound.getInstance();
+			sound.Load("Gun1", R.raw.combo_1);
+			sound.Load("Gun2", R.raw.combo_2);
+			sound.Load("Gun3", R.raw.combo_3);
+			sound.Load("Gun4", R.raw.combo_4);
+			sound.Load("Gun5", R.raw.combo_5);
+			
 			BitmapLoader loader = BitmapLoader.getInstance();
 
 			loader.put("StartButton", R.drawable.start_button0000);
@@ -184,6 +193,8 @@ public class RidemPangView extends GameView {
 			loader.put("GameNumber9",R.drawable.number9);
 			
 			loader.put("Line", R.drawable.line);
+			loader.put("LineVert",R.drawable.line_vert);
+			
 			
 			
 			NumberPrinter printer = NumberPrinter.getInstance("Score",getWidth()*40/100,10,30,50);
@@ -255,19 +266,33 @@ public class RidemPangView extends GameView {
 							//new RythemNote(50, 0, BitmapLoader.getInstance().get("BlueNote"),5);
 							//new KBPalg(BitmapLoader.getInstance().get("BlueNote")[0], "Plag",rand.nextInt(getWidth()-50),20);
 							//CreateNote(50, 0, "BlueNote", 1);
-							RandomCreateNote(2);
+							if(currentTime > 5) currentTime = 5;
+							RandomCreateNote(2*currentTime);
 							Log.v("Test","Timer Test");
 							return 0;
 						}
 					});
 					timer.StartTimer();
-					
 					// TODO 스코어 출력을 위해 NumberPrinter 객체를 월드에 추가한다.
 					NumberPrinter.getInstance("Score").AddWorld();
+					NumberPrinter.getInstance("Score").SetPrintNumber(0);
 					
 					// TODO 라인을 추가함. 전체 크기의 약 80% 에 위치함.
 					rythemLine = new RythemBaseObject("line", 0, getHeight()*80/100,loader.get("Line"),100,getWidth(),20);
 					rythemLine.addWorld();
+					
+					// TODO 라인을 추가함. 전체 크기의 약 80% 에 위치함.
+					rythemLine = new RythemBaseObject("line", getWidth()/6 ,0,loader.get("LineVert"),100,20,getHeight());
+					rythemLine.addWorld();
+					
+					// TODO 라인을 추가함. 전체 크기의 약 80% 에 위치함.
+					rythemLine = new RythemBaseObject("line", getWidth()*3/6,0,loader.get("LineVert"),100,20,getHeight());
+					rythemLine.addWorld();
+
+					// TODO 라인을 추가함. 전체 크기의 약 80% 에 위치함.
+					rythemLine = new RythemBaseObject("line", getWidth()*5/6, 0,loader.get("LineVert"),100,20,getHeight());
+					rythemLine.addWorld();
+					
 			
 					
 					
