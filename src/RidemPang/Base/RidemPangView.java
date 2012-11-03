@@ -67,7 +67,7 @@ public class RidemPangView extends GameView {
 
 		public void CreateNote(float x, float y, String noteName,final float dy) {
 			final RythemBaseObject note = new RythemBaseObject("note", x, y,
-					BitmapLoader.getInstance().get(noteName), 100, 100, 50);
+					BitmapLoader.getInstance().get(noteName), 100, 100, 75);
 			note.setOnActionController(new IControllable() {
 				@Override
 				public void onActionUp(int x, int y) {
@@ -119,11 +119,19 @@ public class RidemPangView extends GameView {
 			Random random = new Random();
 			int ranInt = random.nextInt(3);
 
-			float sx;
+			float sx = 1;
 			
-			do{
-				sx = random.nextFloat()*((float)getWidth()-100);
-			}while(sx+100 > getWidth());
+			switch(random.nextInt(3)){
+				case 0:
+					sx = getWidth()/6 - 40;
+					break;
+				case 1:
+					sx = getWidth()*3/6 - 40;
+					break;
+				case 2:
+					sx = getWidth()*5/6 - 40;
+					break;
+			}
 			
 			switch(ranInt){
 			case 0:
@@ -136,7 +144,6 @@ public class RidemPangView extends GameView {
 				CreateNote(sx,0,"BioletNote",dy);
 				break;
 			}
-			
 		}
 		
 
