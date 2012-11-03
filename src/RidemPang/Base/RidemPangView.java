@@ -151,8 +151,9 @@ public class RidemPangView extends GameView {
 		protected void onInitialize() {
 			InitClearColor(Color.BLACK);
 			GameWorld.getInstance();
-			
+		
 			GameSound sound = GameSound.getInstance();
+			sound.Load("bgm", R.raw.bgm);
 			sound.Load("Gun1", R.raw.combo_1);
 			sound.Load("Gun2", R.raw.combo_2);
 			sound.Load("Gun3", R.raw.combo_3);
@@ -228,8 +229,8 @@ public class RidemPangView extends GameView {
 				if (isStarted == false) {// 한번만 진행한다.
 					isStarted = true;
 					// 로비에서
-					world.Clear();
 					
+					world.Clear();
 					backButton = new AnimatedGameButton(
 							loader.get("BackButton"),
 							loader.get("BackButton"), 0.02f, 0.02f, 
@@ -239,6 +240,7 @@ public class RidemPangView extends GameView {
 						public void onActionUp(int x, int y) {
 							// TODO 게임을 시작한다.
 							if(backButton.IsMe(x, y)){
+						
 								TechVibrator.getInstance().vibrate(500);
 								
 								//게임의 설정을 초기화 한다.
@@ -343,14 +345,16 @@ public class RidemPangView extends GameView {
 					//게임의 시작 버튼
 					gameStartButton = new AnimatedGameButton(
 							loader.get("StartButton"),
-							loader.get("StartButton"), 0.02f, 0.02f, 150, 400,
-							600, 600);
+							loader.get("StartButton"), 0.02f, 0.02f, 150, 1050,
+							600, 1200);
 					gameStartButton.setOnActionControl(new IControllable() {
 						@Override
 						public void onActionUp(int x, int y) {
 							// TODO 게임을 시작한다.
+							GameSound.getInstance().Play("bgm", 10, 10, 0, 1);
 							TechVibrator.getInstance().vibrate(500);
 							isStart = true;
+						
 						}
 
 						@Override
@@ -368,7 +372,7 @@ public class RidemPangView extends GameView {
 
 					
 					// 뒤로 가기 버튼 
-					gameExitButton = new AnimatedGameButton(
+					/*gameExitButton = new AnimatedGameButton(
 							loader.get("ExitButton"), loader.get("ExitButton"),
 							0.02f, 0.02f, 150, 650, 600, 850);
 					gameExitButton.setOnActionControl(new IControllable() {
@@ -385,11 +389,11 @@ public class RidemPangView extends GameView {
 
 						@Override
 						public void onActionDown(int x, int y) {
-						}
-					});
-					world.Add((IDrawable) gameExitButton);
-					world.Add((IControllable) gameExitButton);
-					world.Add((IUpdateable) gameExitButton);
+						}*/
+					//});
+					//world.Add((IDrawable) gameExitButton);
+					//world.Add((IControllable) gameExitButton);
+					//world.Add((IUpdateable) gameExitButton);
 					
 					//NumberPrinter.getInstance("Score").AddWorld();
 				}
