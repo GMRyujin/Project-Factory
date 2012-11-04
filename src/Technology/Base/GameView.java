@@ -438,7 +438,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 		} // run
 	} // End of Thread
 	// -------------------- 쓰레드에서 사용하는 버튼 ----------------------------
-
+	boolean isMultitouchEvent = false;
+	
 	public final synchronized boolean onTouchEvent(MotionEvent event) {
 		// GameWorld world = GameWorld.getInstance();
 

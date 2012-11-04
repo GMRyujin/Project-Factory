@@ -316,7 +316,6 @@ public class RidemPangView extends GameView {
 				if (isStarted == false) {// 한번만 진행한다.
 					isStarted = true;
 					// 로비에서
-					
 					world.Clear();
 					backButton = new AnimatedGameButton(
 							loader.get("BackButton"),
@@ -371,7 +370,7 @@ public class RidemPangView extends GameView {
 
 					// TODO 노트를 출력하는 타이머이다.
 					TechTimer timer1 = new TechTimer(2,0);
-					timer.setOnUpdater(new IUpdateable() {
+					timer1.setOnUpdater(new IUpdateable() {
 						@Override
 						public float Update(float timeDelta) {
 							Random rand = new Random();
@@ -379,15 +378,11 @@ public class RidemPangView extends GameView {
 							//new RythemNote(50, 0, BitmapLoader.getInstance().get("BlueNote"),5);
 							//new KBPalg(BitmapLoader.getInstance().get("BlueNote")[0], "Plag",rand.nextInt(getWidth()-50),20);
 							//CreateNote(50, 0, "BlueNote", 1);
-							CreateLineBlock(2,10);
+							CreateLineBlock(1,10);
 							return 0;
 						}
 					});
 					timer1.StartTimer();
-					// TODO 스코어 출력을 위해 NumberPrinter 객체를 월드에 추가한다.
-					NumberPrinter.getInstance("Score").AddWorld();
-					NumberPrinter.getInstance("Score").SetPrintNumber(0);
-					
 					
 					// TODO 스코어 출력을 위해 NumberPrinter 객체를 월드에 추가한다.
 					NumberPrinter.getInstance("Score").AddWorld();
@@ -416,7 +411,7 @@ public class RidemPangView extends GameView {
 			} else {// TODO 게임이 멈췄을때 혹은 로고상태일때 (게임에서 메인으로 갔을때)
 				if (isMainStarted == false) {
 					isMainStarted = true;
-					
+					world.Clear();
 					redEffect = new AnimatedGameButton(loader.get("RedEffect"),
 							loader.get("RedEffect"), 0.02f, 0.02f, 0,
 							getHeight() - 200, 100, getHeight());
