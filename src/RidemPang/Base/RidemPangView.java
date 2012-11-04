@@ -151,8 +151,9 @@ public class RidemPangView extends GameView {
 		protected void onInitialize() {
 			InitClearColor(Color.BLACK);
 			GameWorld.getInstance();
-			
+		
 			GameSound sound = GameSound.getInstance();
+			sound.Load("bgm", R.raw.bgm);
 			sound.Load("Gun1", R.raw.combo_1);
 			sound.Load("Gun2", R.raw.combo_2);
 			sound.Load("Gun3", R.raw.combo_3);
@@ -228,8 +229,8 @@ public class RidemPangView extends GameView {
 				if (isStarted == false) {// 한번만 진행한다.
 					isStarted = true;
 					// 로비에서
-					world.Clear();
 					
+					world.Clear();
 					backButton = new AnimatedGameButton(
 							loader.get("BackButton"),
 							loader.get("BackButton"), 0.02f, 0.02f, 
@@ -239,6 +240,7 @@ public class RidemPangView extends GameView {
 						public void onActionUp(int x, int y) {
 							// TODO 게임을 시작한다.
 							if(backButton.IsMe(x, y)){
+						
 								TechVibrator.getInstance().vibrate(500);
 								
 								//게임의 설정을 초기화 한다.
@@ -349,8 +351,12 @@ public class RidemPangView extends GameView {
 						@Override
 						public void onActionUp(int x, int y) {
 							// TODO 게임을 시작한다.
+							//GameSound.getInstance().Load(key, res)이거 함? 아마도 너가 머 잘못건드린거 아니야? 글쌔 ㅠ. .ㅎ ㅏ그럼
+							// 다시 되돌아가는게 최고임 . 머 추가한거 있어 여가ㅣ이럴떄는  훔.. 이미 이게여기는 지금 절차지향적으로 코딩이 되어있기때문에 건드리면안되. 그냥 추가만 하면되는데 저걸 주석시켜버리니까.. 예쌍치 못한 문제가 생기는거야
+					//GameSound.getInstance().Play("combo1", 10, 10, -1, 1); //이거 등록해줌? 지금 실행이 안됌 ㅠ 이거 제거하면 도;ㅁ? 아니 이거 한번 한이후로 주석처리해도 실행이안돼 ㅠㅠ 걍 폰 껐다가 켜볼게
 							TechVibrator.getInstance().vibrate(500);
 							isStart = true;
+						
 						}
 
 						@Override

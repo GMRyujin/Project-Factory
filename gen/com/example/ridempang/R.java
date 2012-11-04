@@ -71,11 +71,13 @@ public final class R {
         public static final int activity_main=0x7f070000;
     }
     public static final class raw {
-        public static final int combo_1=0x7f040000;
-        public static final int combo_2=0x7f040001;
-        public static final int combo_3=0x7f040002;
-        public static final int combo_4=0x7f040003;
-        public static final int combo_5=0x7f040004;
+        public static final int bgm=0x7f040000;
+        public static final int bgm_test=0x7f040001;
+        public static final int combo_1=0x7f040002;
+        public static final int combo_2=0x7f040003;
+        public static final int combo_3=0x7f040004;
+        public static final int combo_4=0x7f040005;
+        public static final int combo_5=0x7f040006;
     }
     public static final class string {
         public static final int app_name=0x7f050000;
