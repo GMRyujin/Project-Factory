@@ -343,8 +343,8 @@ public class RidemPangView extends GameView {
 					//게임의 시작 버튼
 					gameStartButton = new AnimatedGameButton(
 							loader.get("StartButton"),
-							loader.get("StartButton"), 0.02f, 0.02f, 150, 400,
-							600, 600);
+							loader.get("StartButton"), 0.02f, 0.02f, 150, 1050,
+							600, 1200);
 					gameStartButton.setOnActionControl(new IControllable() {
 						@Override
 						public void onActionUp(int x, int y) {
@@ -368,7 +368,7 @@ public class RidemPangView extends GameView {
 
 					
 					// 뒤로 가기 버튼 
-					gameExitButton = new AnimatedGameButton(
+					/*gameExitButton = new AnimatedGameButton(
 							loader.get("ExitButton"), loader.get("ExitButton"),
 							0.02f, 0.02f, 150, 650, 600, 850);
 					gameExitButton.setOnActionControl(new IControllable() {
@@ -385,11 +385,11 @@ public class RidemPangView extends GameView {
 
 						@Override
 						public void onActionDown(int x, int y) {
-						}
-					});
-					world.Add((IDrawable) gameExitButton);
-					world.Add((IControllable) gameExitButton);
-					world.Add((IUpdateable) gameExitButton);
+						}*/
+					//});
+					//world.Add((IDrawable) gameExitButton);
+					//world.Add((IControllable) gameExitButton);
+					//world.Add((IUpdateable) gameExitButton);
 					
 					//NumberPrinter.getInstance("Score").AddWorld();
 				}
