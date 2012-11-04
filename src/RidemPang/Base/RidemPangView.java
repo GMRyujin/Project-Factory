@@ -116,6 +116,57 @@ public class RidemPangView extends GameView {
 			note.addWorld();
 		}
 		
+		//TODO 소리를 다르게 할수있게 생성함.
+		public void CreateNote(float x, float y, String noteName,final float dy,final String soundName) {
+			final RythemBaseObject note = new RythemBaseObject("note", x, y,
+					BitmapLoader.getInstance().get(noteName), 100, 100, 75);
+			note.setOnActionController(new IControllable() {
+				@Override
+				public void onActionUp(int x, int y) {
+					if (note.IsMe(x, y)) {
+						Log.v("RTest", "OnClick");
+					}
+				}
+
+				@Override
+				public void onActionMove(int x, int y) {
+					if (note.IsMe(x, y)) {
+						Log.v("RTest", "OnMove");
+					}
+				}
+
+				@Override
+				public void onActionDown(int x, int y) {
+					//선 아래에 노트가 있는지 검사한다. 80퍼센트 보다 아래있으면 클릭을 허락한다.
+					if(getHeight()*80/100 -50 > note.GetY()) return;
+					
+					if (note.IsMe(x, y)) {
+						Log.v("RTest", "OnDown");
+						//TODO 만일 개체가 선택되었을떄 스코어를 올린다.
+						NumberPrinter printer = NumberPrinter.getInstance("Score");
+						int score = printer.GetPrintNumber();
+						printer.SetPrintNumber(score + (int)dy*10);
+						note.removeWorld();
+						GameSound.getInstance().Play(soundName, 10, 10, 0, 1);
+					}
+				}
+			});
+			note.setOnUpdater(new IUpdateable() {
+				@Override
+				public float Update(float timeDelta) {
+					note.SetPos(note.GetX(),note.GetY() + dy);
+					
+					//TODO 핸드폰의 높이를 넘어가면 알아서 자동 삭제 Bug : 갑자기 터치를 하면 멈춘다.
+					if(note.GetY() -100 > getHeight()){
+						note.removeWorld();
+					}
+					return 0;
+				}
+			});
+			note.addWorld();
+		}
+		
+		///랜덤으로 노트가 떨어지게한다.
 		public void RandomCreateNote(float dy)
 		{
 			Random random = new Random();
@@ -134,6 +185,38 @@ public class RidemPangView extends GameView {
 					sx = getWidth()*5/6 - 40;
 					break;
 			}
+			
+			switch(ranInt){
+			case 0:
+				CreateNote(sx,0,"BlueNote",dy);
+				break;
+			case 1:
+				CreateNote(sx,0,"RedNote",dy);
+				break;
+			case 2:
+				CreateNote(sx,0,"BioletNote",dy);
+				break;
+			}
+		}
+		
+		//TODO num에 의해 노트를 떨어지게 할수있음
+		public void CreateLineBlock(int num,float dy)
+		{
+			Random random = new Random();
+			int ranInt = random.nextInt(3);
+
+			float sx = 1;
+			switch(num){
+			case 0:
+				sx = getWidth()/6 - 40;
+				break;
+			case 1:
+				sx = getWidth()*3/6 - 40;
+				break;
+			case 2:
+				sx = getWidth()*5/6 - 40;
+				break;
+		}
 			
 			switch(ranInt){
 			case 0:
@@ -270,7 +353,7 @@ public class RidemPangView extends GameView {
 					
 					
 					// TODO 노트를 출력하는 타이머이다.
-					TechTimer timer = new TechTimer(2,0);
+					TechTimer timer = new TechTimer(1,0);
 					timer.setOnUpdater(new IUpdateable() {
 						@Override
 						public float Update(float timeDelta) {
@@ -279,34 +362,50 @@ public class RidemPangView extends GameView {
 							//new RythemNote(50, 0, BitmapLoader.getInstance().get("BlueNote"),5);
 							//new KBPalg(BitmapLoader.getInstance().get("BlueNote")[0], "Plag",rand.nextInt(getWidth()-50),20);
 							//CreateNote(50, 0, "BlueNote", 1);
-							if(currentTime > 5) currentTime = 5;
-							RandomCreateNote(2*currentTime);
-							Log.v("Test","Timer Test");
+							CreateLineBlock(0,10);
 							return 0;
 						}
 					});
 					timer.StartTimer();
+					
+
+					// TODO 노트를 출력하는 타이머이다.
+					TechTimer timer1 = new TechTimer(2,0);
+					timer.setOnUpdater(new IUpdateable() {
+						@Override
+						public float Update(float timeDelta) {
+							Random rand = new Random();
+							//CreateNote(rand.nextInt(getWidth()-50),0,"BlueNote",currentTime > 10 ? 10 : (int)currentTime);
+							//new RythemNote(50, 0, BitmapLoader.getInstance().get("BlueNote"),5);
+							//new KBPalg(BitmapLoader.getInstance().get("BlueNote")[0], "Plag",rand.nextInt(getWidth()-50),20);
+							//CreateNote(50, 0, "BlueNote", 1);
+							CreateLineBlock(2,10);
+							return 0;
+						}
+					});
+					timer1.StartTimer();
 					// TODO 스코어 출력을 위해 NumberPrinter 객체를 월드에 추가한다.
 					NumberPrinter.getInstance("Score").AddWorld();
 					NumberPrinter.getInstance("Score").SetPrintNumber(0);
 					
+					
+					// TODO 스코어 출력을 위해 NumberPrinter 객체를 월드에 추가한다.
+					NumberPrinter.getInstance("Score").AddWorld();
+					NumberPrinter.getInstance("Score").SetPrintNumber(0);
+					
+					
 					// TODO 라인을 추가함. 전체 크기의 약 80% 에 위치함.
 					rythemLine = new RythemBaseObject("line", 0, getHeight()*80/100,loader.get("Line"),100,getWidth(),20);
 					rythemLine.addWorld();
-					
-					// TODO 라인을 추가함. 전체 크기의 약 80% 에 위치함.
 					rythemLine = new RythemBaseObject("line", getWidth()/6 ,0,loader.get("LineVert"),100,20,getHeight());
 					rythemLine.addWorld();
-					
-					// TODO 라인을 추가함. 전체 크기의 약 80% 에 위치함.
 					rythemLine = new RythemBaseObject("line", getWidth()*3/6,0,loader.get("LineVert"),100,20,getHeight());
 					rythemLine.addWorld();
-
-					// TODO 라인을 추가함. 전체 크기의 약 80% 에 위치함.
 					rythemLine = new RythemBaseObject("line", getWidth()*5/6, 0,loader.get("LineVert"),100,20,getHeight());
 					rythemLine.addWorld();
 					
-			
+					
+					
 					
 					
 					currentTime = 0;
@@ -315,7 +414,6 @@ public class RidemPangView extends GameView {
 				
 				
 			} else {// TODO 게임이 멈췄을때 혹은 로고상태일때 (게임에서 메인으로 갔을때)
-				
 				if (isMainStarted == false) {
 					isMainStarted = true;
 					
@@ -378,7 +476,7 @@ public class RidemPangView extends GameView {
 					world.Add((IUpdateable) gameStartButton);
 
 					
-					// 뒤로 가기 버튼 
+					// 게임의 나가기 버튼.
 					/*gameExitButton = new AnimatedGameButton(
 							loader.get("ExitButton"), loader.get("ExitButton"),
 							0.02f, 0.02f, 150, 650, 600, 850);
@@ -411,8 +509,6 @@ public class RidemPangView extends GameView {
 			//TODO TEST
 			GameWorld.getInstance().Update(timeDelta);
 		}
-
-		
 		
 		@Override
 		protected void Draw(Canvas canvas) {
