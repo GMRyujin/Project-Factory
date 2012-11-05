@@ -449,6 +449,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 		isMultitouchEvent = b;
 	}
 	
+	//만일 터치시에 오브젝트의 삭제 혹은 추가를 할때 팅길경우 GameWorld의 Remove 혹은 Add 부분에 문제가 생긴것기므로 한번 살펴보기 바란다.
 	@SuppressWarnings("deprecation")
 	public final synchronized boolean onTouchEvent(MotionEvent event) {
 		// GameWorld world = GameWorld.getInstance();

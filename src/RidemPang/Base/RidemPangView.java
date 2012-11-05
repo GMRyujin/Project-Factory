@@ -235,6 +235,7 @@ public class RidemPangView extends GameView {
 		@Override
 		protected void onInitialize() {
 			InitClearColor(Color.BLACK);
+			setMultiTouch(true);
 			GameWorld.getInstance();
 		
 			GameSound sound = GameSound.getInstance();
@@ -388,7 +389,6 @@ public class RidemPangView extends GameView {
 					// TODO 스코어 출력을 위해 NumberPrinter 객체를 월드에 추가한다.
 					NumberPrinter.getInstance("Score").AddWorld();
 					NumberPrinter.getInstance("Score").SetPrintNumber(0);
-					
 					
 					// TODO 라인을 추가함. 전체 크기의 약 80% 에 위치함.
 					rythemLine = new RythemBaseObject("line", 0, getHeight()*80/100,loader.get("Line"),100,getWidth(),20);

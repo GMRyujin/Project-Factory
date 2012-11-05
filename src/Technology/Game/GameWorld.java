@@ -55,20 +55,35 @@ public final class GameWorld implements IControllable, IDrawable, IUpdateable {
          * 이 문제의 해결방법은 오브젝트가 이미 추가가 되었는지 혹은 두번 삭제되고 있는지를 확인해보면 된다.
          * 이 문제의 원인은 멀티터치를 적용하면서 오브젝트가 연속으로 두번 터치당하고 이를 통해 오브젝트는 삭제 리스트에 두개가 추가된다.
          * 따라서 이를 리스트에서 확인후 추가가 되어있으면 리스트에 추가하지 않는 것으로 해결하였다. */
+        
+        /* 리스트의 contain 메소드는 객체의 주소를 비교하는 것이 아닌 다른 기준으로 비교하는 것 같다. 따라서 이 메소드는 하드 == 연산을 할때 쓰지 않기 바란다.
+         * 대신에 이터레이터를 사용하여 직접 주소를 비교하기 바란닫.  */
         public void Add(IControllable object){
-        	if(controllList.contains(object) == true)	return;
+        	Iterator<IControllable> itor = controllListAdder.iterator();
+        	while(itor.hasNext()){
+        		if(itor.next() == object) return;
+        	}
         	controllListAdder.add(object);
         }
         public void Add(IDrawable object){
-        	if(drawListAdder.contains(object) == true)	return;
+        	Iterator<IDrawable> itor = drawListAdder.iterator();
+        	while(itor.hasNext()){
+        		if(itor.next() == object) return;
+        	}
         	drawListAdder.add(object);
         }
         public void Add(IUpdateable object){
-        	if(updateListAdder.contains(object) == true)	return;
+        	Iterator<IUpdateable> itor = updateListAdder.iterator();
+        	while(itor.hasNext()){
+        		if(itor.next() == object) return;
+        	}
         	updateListAdder.add(object);
         }
         public void Add(RigidBody object){
-        	if(collLisAdder.rigidList.contains(object) == true)	return;
+        	Iterator<RigidBody> itor = collLisAdder.itorator();
+        	while(itor.hasNext()){
+        		if(itor.next() == object) return;
+        	}
         	collLisAdder.Add(object);
         }
         
@@ -196,27 +211,37 @@ public final class GameWorld implements IControllable, IDrawable, IUpdateable {
     //만일 터치시에 오브젝트의 삭제 혹은 추가를 할때 팅길경우 GameWorld의 Remove 혹은 Add 부분에 문제가 생긴것기므로 한번 살펴보기 바란다.
 	/* 더미 버퍼에 추가하고, 모든 업데이트와 Draw를 끝마친후 제거한다. */
     //이미 포함되어있는지 확인작업을 한다. 중복 삭제를 피한다.
+    /* 리스트의 contain 메소드는 객체의 주소를 비교하는 것이 아닌 다른 기준으로 비교하는 것 같다. 따라서 이 메소드는 하드 == 연산을 할때 쓰지 않기 바란다.
+     * 대신에 이터레이터를 사용하여 직접 주소를 비교하기 바란닫.  */
 	public boolean Remove(IDrawable object) {
-		if (dummyDrawList.contains(object) == true)
-			return false;
+		Iterator<IDrawable> itor = dummyDrawList.iterator();
+		if(itor.hasNext()){
+			if(itor.next() == object) return false;
+		}
 		return dummyDrawList.add(object);
 	}
 
 	public boolean Remove(IUpdateable object) {
-		if (dummyUpdateList.contains(object) == true)
-			return false;
+		Iterator<IUpdateable> itor = dummyUpdateList.iterator();
+		if(itor.hasNext()){
+			if(itor.next() == object) return false;
+		}
 		return dummyUpdateList.add(object);
 	}
 
 	public boolean Remove(IControllable object) {
-		if (dummyControllList.contains(object) == true)
-			return false;
+		Iterator<IControllable> itor = dummyControllList.iterator();
+		if(itor.hasNext()){
+			if(itor.next() == object) return false;
+		}
 		return dummyControllList.add(object);
 	}
 
 	public void Remove(RigidBody object) {
-		if (dummyCollLis.rigidList.contains(object) == true)
-			return;
+		Iterator<RigidBody> itor = dummyCollLis.itorator();
+		if(itor.hasNext()){
+			if(itor.next() == object) return;
+		}
 		dummyCollLis.Add(object);
 	}
 
