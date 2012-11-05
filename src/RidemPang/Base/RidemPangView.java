@@ -327,14 +327,12 @@ public class RidemPangView extends GameView {
 						public void onActionUp(float x, float y) {
 							// TODO 게임을 시작한다.
 							if(backButton.IsMe(x, y)){
-						
 								TechVibrator.getInstance().vibrate(500);
-								
 								//게임의 설정을 초기화 한다.
-								GameWorld.getInstance().Clear();
 								isMainStarted = false;
 								isStart = false;
 								isStarted = false;
+								MusicPlayer.get("bgm").pause();;
 								
 								Log.v("Debug","Touch Up Coord : " + x +  " , " +  y);
 							}
@@ -369,7 +367,6 @@ public class RidemPangView extends GameView {
 					});
 					timer.StartTimer();
 					
-
 					// TODO 노트를 출력하는 타이머이다.
 					TechTimer timer1 = new TechTimer(2,0);
 					timer1.setOnUpdater(new IUpdateable() {
@@ -399,10 +396,6 @@ public class RidemPangView extends GameView {
 					rythemLine.addWorld();
 					rythemLine = new RythemBaseObject("line", getWidth()*5/6, 0,loader.get("LineVert"),100,20,getHeight());
 					rythemLine.addWorld();
-					
-					
-					
-					
 					
 					currentTime = 0;
 				}// TODO 한번만 호출하는 곳(업데이트에서)
@@ -514,12 +507,18 @@ public class RidemPangView extends GameView {
 			//NumberPrinter.getInstance("Score").Draw(canvas);
 		}
 	}
+	
+	@Override
+	public void surfaceCreated(SurfaceHolder holder) {
+		super.surfaceCreated(holder);
+		if(isStart)	MusicPlayer.get("bgm").start();
+	}
 
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
 		// TODO Auto-generated method stub
 		super.surfaceDestroyed(holder);
-		MusicPlayer.get("bgm").stop();
+		if(isStart) MusicPlayer.get("bgm").pause();
 	}
 	
 	
