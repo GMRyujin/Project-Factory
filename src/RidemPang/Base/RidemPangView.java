@@ -96,6 +96,7 @@ public class RidemPangView extends GameView {
 						NumberPrinter printer = NumberPrinter.getInstance("Score");
 						int score = printer.GetPrintNumber();
 						printer.SetPrintNumber(score + (int)dy*10);
+						printer.SetSize(100, 100);
 						note.removeWorld();
 						GameSound.getInstance().Play("Gun1", 10, 10, 0, 1);
 					}
@@ -188,13 +189,13 @@ public class RidemPangView extends GameView {
 			
 			switch(ranInt){
 			case 0:
-				CreateNote(sx,0,"BlueNote",dy);
+				CreateNote(sx,-60,"BlueNote",dy);
 				break;
 			case 1:
-				CreateNote(sx,0,"RedNote",dy);
+				CreateNote(sx,-60,"RedNote",dy);
 				break;
 			case 2:
-				CreateNote(sx,0,"BioletNote",dy);
+				CreateNote(sx,-60,"BioletNote",dy);
 				break;
 			}
 		}
@@ -220,13 +221,13 @@ public class RidemPangView extends GameView {
 			
 			switch(ranInt){
 			case 0:
-				CreateNote(sx,0,"BlueNote",dy);
+				CreateNote(sx,-60,"BlueNote",dy);
 				break;
 			case 1:
-				CreateNote(sx,0,"RedNote",dy);
+				CreateNote(sx,-60,"RedNote",dy);
 				break;
 			case 2:
-				CreateNote(sx,0,"BioletNote",dy);
+				CreateNote(sx,-60,"BioletNote",dy);
 				break;
 			}
 		}
@@ -332,7 +333,7 @@ public class RidemPangView extends GameView {
 								isMainStarted = false;
 								isStart = false;
 								isStarted = false;
-								MusicPlayer.get("bgm").pause();;
+								MusicPlayer.get("bgm").pause();
 								
 								Log.v("Debug","Touch Up Coord : " + x +  " , " +  y);
 							}
