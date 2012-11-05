@@ -139,27 +139,6 @@ public class GameMain extends GameView {
 			 * loader.put("Logo",R.drawable.we_are_logo0003);
 			 */
 
-			loader.put("TouchLayer", R.drawable.touch_layer0000);
-			loader.put("Background", R.drawable.background_small);
-			loader.put("EffectGreen", R.drawable.bloom_effect_green0000);
-			loader.put("RedEffect", R.drawable.bloom_effect_red0000);
-
-			loader.put("BioletNote", R.drawable.biolet_note0000);
-			loader.put("BioletNote", R.drawable.biolet_note0001);
-			loader.put("BioletNote", R.drawable.biolet_note0002);
-			loader.put("BioletNote", R.drawable.biolet_note0003);
-
-			loader.put("BlueNote", R.drawable.blue_note0000);
-			loader.put("BlueNote", R.drawable.blue_note0001);
-			loader.put("BlueNote", R.drawable.blue_note0002);
-			loader.put("BlueNote", R.drawable.blue_note0003);
-
-			loader.put("RedNote", R.drawable.read_note0001);
-			loader.put("RedNote", R.drawable.read_note0002);
-			loader.put("RedNote", R.drawable.read_note0003);
-			loader.put("RedNote", R.drawable.read_note0003);
-
-			loader.put("EffectRedPang", R.drawable.sprite_red_effect_pang0000);
 			
 			loader.put("BackButton", R.drawable.back_button0000);
 		}

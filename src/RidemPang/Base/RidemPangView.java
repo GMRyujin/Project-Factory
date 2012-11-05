@@ -273,7 +273,7 @@ public class RidemPangView extends GameView {
 
 			loader.put("BioletNote", R.drawable.biolet_note0000);
 			loader.put("BlueNote", R.drawable.blue_note0000);
-			loader.put("RedNote", R.drawable.read_note0001);
+			loader.put("RedNote", R.drawable.read_note0000);
 
 			loader.put("EffectRedPang", R.drawable.sprite_red_effect_pang0000);
 			
