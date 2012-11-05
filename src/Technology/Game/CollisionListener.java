@@ -13,7 +13,7 @@ import Technology.Interface.IUpdateable;
  * �� �� ��  �� �������� å���� �� �浹�˻�����̴�. ������Ʈ�� ������Ʈ�� �ƴϴ�.
  * */
 public class CollisionListener implements IUpdateable{
-	ArrayList<RigidBody> rigidList = new ArrayList<RigidBody>();
+	public ArrayList<RigidBody> rigidList = new ArrayList<RigidBody>();
 
 	ArrayList<RigidBody> removeList = new ArrayList<RigidBody>();
 	

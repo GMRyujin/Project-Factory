@@ -449,6 +449,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 		isMultitouchEvent = b;
 	}
 	
+	@SuppressWarnings("deprecation")
 	public final synchronized boolean onTouchEvent(MotionEvent event) {
 		// GameWorld world = GameWorld.getInstance();
 
@@ -472,58 +473,84 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 				int actionPointerId = keyAction & MotionEvent.ACTION_POINTER_ID_MASK;
 				@SuppressWarnings("unused")
 				int actionEvent = keyAction & MotionEvent.ACTION_MASK;
+				int touchCount = event.getPointerCount();
 				
-					
+				Log.v("Debug","" + touchCount);
+				
+				Log.v("Debug","Coord 0: " + event.getX(0) + ", " + event.getY(0));
+				Log.v("Debug","Coord 1: " + event.getX(1) + ", " + event.getY(1));
+				Log.v("Debug","Action Event : " + "" + event.getAction());
+				
+				//멀티터치 이벤트는 여기서 처리한다.
 				switch (keyAction) {
+				case MotionEvent.ACTION_POINTER_1_DOWN:
+					synchronized (touchDown) {
+						touchDown.add(new PointF(event.getX(), event.getY()));
+					}
+					break;
+				case MotionEvent.ACTION_POINTER_1_UP:
+					synchronized (touchUp) {
+						touchUp.add(new PointF(event.getX(), event.getY()));
+					}
+					break;
+				
+				case MotionEvent.ACTION_POINTER_2_UP:
+					synchronized (touchUp) {
+						touchUp.add(new PointF(event.getX(0), event.getY(0)));
+						touchUp.add(new PointF(event.getX(1), event.getY(1)));
+					}
+					break;
+				case MotionEvent.ACTION_POINTER_2_DOWN:
+					synchronized (touchDown) {
+						touchDown.add(new PointF(event.getX(0), event.getY(0)));
+						touchDown.add(new PointF(event.getX(1), event.getY(1)));
+					}
+					break;
+				case MotionEvent.ACTION_POINTER_3_DOWN:
+					synchronized (touchDown) {
+						touchDown.add(new PointF(event.getX(0), event.getY(0)));
+						touchDown.add(new PointF(event.getX(1), event.getY(1)));
+						touchDown.add(new PointF(event.getX(2), event.getY(2)));
+					}
+					break;
+				case MotionEvent.ACTION_POINTER_3_UP:
+					synchronized (touchUp) {
+						touchUp.add(new PointF(event.getX(0), event.getY(0)));
+						touchUp.add(new PointF(event.getX(1), event.getY(1)));
+						touchUp.add(new PointF(event.getX(2), event.getY(2)));
+					}
+					break;
 				case MotionEvent.ACTION_MOVE:
 					synchronized (touchMove) {
-						//touchMove.add(new PointF(event.getX(0), event.getY(0)));
-						//touchMove.add(new PointF(event.getX(1), event.getY(1)));
+						//for(int i = 0; i < touchCount ; i++){
+						//	touchMove.add(new PointF(event.getX(i), event.getY(i)));
+						//}
 					}
-					// world.onActionMove(x, y);
-					break;
-				case MotionEvent.ACTION_UP:
-					synchronized (touchUp) {
-						touchUp.add(new PointF(x, y));
-					}
-					// world.onActionUp(x, y);
-					break;
-				case MotionEvent.ACTION_DOWN:
-					synchronized (touchDown) {
-						touchDown.add(new PointF(x, y));
-					}
-					// world.onActionDown(x, y);
 					break;
 				}
-				
-				
 				return true;
 			}else{//갯수가 하나라면 아래 부분을 실행한다.
+				//멀티터치가 아니거나, 멀티터치이지만 하나의 터치좌표만 존재하는 경우 이 부분이 실행된다.
 			}
 		}
 		
-		//멀티터치가 아니거나, 멀티터치이지만 하나의 터치좌표만 존재하는 경우 이 부분이 실행된다.
 		switch (keyAction) {
 		case MotionEvent.ACTION_MOVE:
 			synchronized (touchMove) {
 				touchMove.add(new PointF(x, y));
 			}
-			// world.onActionMove(x, y);
 			break;
 		case MotionEvent.ACTION_UP:
 			synchronized (touchUp) {
 				touchUp.add(new PointF(x, y));
 			}
-			// world.onActionUp(x, y);
 			break;
 		case MotionEvent.ACTION_DOWN:
 			synchronized (touchDown) {
 				touchDown.add(new PointF(x, y));
 			}
-			// world.onActionDown(x, y);
 			break;
 		}
-		
 		return true;
 	}
 	

@@ -51,26 +51,25 @@ public final class GameWorld implements IControllable, IDrawable, IUpdateable {
         
         
 
-        /* ������Ʈ�� �߰��Ѵ�. */
+        /* 12.11.05 중복 추가,삭제를 패치하였다. 오브젝트가 두번 삭제되면 팅기고, 두번 추가되면 이상현상이 생기므로 이를 패치하였다.
+         * 이 문제의 해결방법은 오브젝트가 이미 추가가 되었는지 혹은 두번 삭제되고 있는지를 확인해보면 된다.
+         * 이 문제의 원인은 멀티터치를 적용하면서 오브젝트가 연속으로 두번 터치당하고 이를 통해 오브젝트는 삭제 리스트에 두개가 추가된다.
+         * 따라서 이를 리스트에서 확인후 추가가 되어있으면 리스트에 추가하지 않는 것으로 해결하였다. */
         public void Add(IControllable object){
-        	//synchronized (this) {
-                controllListAdder.add(object);
-        	//}
+        	if(controllList.contains(object) == true)	return;
+        	controllListAdder.add(object);
         }
         public void Add(IDrawable object){
-        	//synchronized(this) {
-               drawListAdder.add(object);
-        	//}
+        	if(drawListAdder.contains(object) == true)	return;
+        	drawListAdder.add(object);
         }
         public void Add(IUpdateable object){
-        	//synchronized(this) {
-                updateListAdder.add(object);
-        	//}
+        	if(updateListAdder.contains(object) == true)	return;
+        	updateListAdder.add(object);
         }
         public void Add(RigidBody object){
-        	//synchronized(this) {
-                collLisAdder.Add(object);
-        	//}
+        	if(collLisAdder.rigidList.contains(object) == true)	return;
+        	collLisAdder.Add(object);
         }
         
         
@@ -193,31 +192,34 @@ public final class GameWorld implements IControllable, IDrawable, IUpdateable {
         	
         	return null;
         }
-        
-        /* 더미 버퍼에 추가하고, 모든 업데이트와 Draw를 끝마친후 제거한다. */
-        public boolean Remove(IDrawable object){
-        	//synchronized(this) {
-                return dummyDrawList.add(object);
-        	//}
-        }
-        
-        public boolean Remove(IUpdateable object){
-        	//synchronized(this) {
-                return dummyUpdateList.add(object);
-        	//}
-        }
-        
-        public boolean Remove(IControllable object){
-        	//synchronized(this) {
-                return dummyControllList.add(object);
-        	//}
-        }
-        public void Remove(RigidBody object){
-        	//synchronized(this) {
-                dummyCollLis.Add(object);
-        	//}
-        }
-        
+     
+    //만일 터치시에 오브젝트의 삭제 혹은 추가를 할때 팅길경우 GameWorld의 Remove 혹은 Add 부분에 문제가 생긴것기므로 한번 살펴보기 바란다.
+	/* 더미 버퍼에 추가하고, 모든 업데이트와 Draw를 끝마친후 제거한다. */
+    //이미 포함되어있는지 확인작업을 한다. 중복 삭제를 피한다.
+	public boolean Remove(IDrawable object) {
+		if (dummyDrawList.contains(object) == true)
+			return false;
+		return dummyDrawList.add(object);
+	}
+
+	public boolean Remove(IUpdateable object) {
+		if (dummyUpdateList.contains(object) == true)
+			return false;
+		return dummyUpdateList.add(object);
+	}
+
+	public boolean Remove(IControllable object) {
+		if (dummyControllList.contains(object) == true)
+			return false;
+		return dummyControllList.add(object);
+	}
+
+	public void Remove(RigidBody object) {
+		if (dummyCollLis.rigidList.contains(object) == true)
+			return;
+		dummyCollLis.Add(object);
+	}
+
         /**
          * @brief World내의 객체를 모두 삭제한다.
          * */
