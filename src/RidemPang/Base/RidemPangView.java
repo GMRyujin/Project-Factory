@@ -72,21 +72,21 @@ public class RidemPangView extends GameView {
 					BitmapLoader.getInstance().get(noteName), 100, 100, 75);
 			note.setOnActionController(new IControllable() {
 				@Override
-				public void onActionUp(int x, int y) {
+				public void onActionUp(float x, float y) {
 					if (note.IsMe(x, y)) {
 						Log.v("RTest", "OnClick");
 					}
 				}
 
 				@Override
-				public void onActionMove(int x, int y) {
+				public void onActionMove(float x, float y) {
 					if (note.IsMe(x, y)) {
 						Log.v("RTest", "OnMove");
 					}
 				}
 
 				@Override
-				public void onActionDown(int x, int y) {
+				public void onActionDown(float x, float y) {
 					//선 아래에 노트가 있는지 검사한다. 80퍼센트 보다 아래있으면 클릭을 허락한다.
 					if(getHeight()*80/100 -50 > note.GetY()) return;
 					
@@ -122,21 +122,21 @@ public class RidemPangView extends GameView {
 					BitmapLoader.getInstance().get(noteName), 100, 100, 75);
 			note.setOnActionController(new IControllable() {
 				@Override
-				public void onActionUp(int x, int y) {
+				public void onActionUp(float x, float y) {
 					if (note.IsMe(x, y)) {
 						Log.v("RTest", "OnClick");
 					}
 				}
 
 				@Override
-				public void onActionMove(int x, int y) {
+				public void onActionMove(float x, float y) {
 					if (note.IsMe(x, y)) {
 						Log.v("RTest", "OnMove");
 					}
 				}
 
 				@Override
-				public void onActionDown(int x, int y) {
+				public void onActionDown(float x, float y) {
 					//선 아래에 노트가 있는지 검사한다. 80퍼센트 보다 아래있으면 클릭을 허락한다.
 					if(getHeight()*80/100 -50 > note.GetY()) return;
 					
@@ -323,7 +323,7 @@ public class RidemPangView extends GameView {
 							getWidth()-100, 0,getWidth(),100);
 					backButton.setOnActionControl(new IControllable() {
 						@Override
-						public void onActionUp(int x, int y) {
+						public void onActionUp(float x, float y) {
 							// TODO 게임을 시작한다.
 							if(backButton.IsMe(x, y)){
 						
@@ -335,15 +335,16 @@ public class RidemPangView extends GameView {
 								isStart = false;
 								isStarted = false;
 								
+								Log.v("Debug","Touch Up Coord : " + x +  " , " +  y);
 							}
 						}
 						@Override
-						public void onActionMove(int x, int y) {
+						public void onActionMove(float x, float y) {
 
 						}
 
 						@Override
-						public void onActionDown(int x, int y) {
+						public void onActionDown(float x, float y) {
 						}
 					});
 					world.Add((IDrawable) backButton);
@@ -446,7 +447,7 @@ public class RidemPangView extends GameView {
 							600, 1200);
 					gameStartButton.setOnActionControl(new IControllable() {
 						@Override
-						public void onActionUp(int x, int y) {
+						public void onActionUp(float x, float y) {
 							// TODO 게임을 시작한다.
 							//GameSound.getInstance().Play("bgm", 10, 10, 1, 1);
 							MusicPlayer.get("bgm").start();
@@ -458,12 +459,12 @@ public class RidemPangView extends GameView {
 						}
 
 						@Override
-						public void onActionMove(int x, int y) {
+						public void onActionMove(float x, float y) {
 
 						}
 
 						@Override
-						public void onActionDown(int x, int y) {
+						public void onActionDown(float x, float y) {
 						}
 					});
 					world.Add((IDrawable) gameStartButton);

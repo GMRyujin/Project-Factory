@@ -9,11 +9,11 @@ import android.graphics.Canvas;
 import android.graphics.PointF;
 import android.util.Log;
 
-/* Rotate °¡´ÉÇÑ °ÔÀÓ ¿ÀºêÁ§Æ® 
- * @ ±×·ÁÁú¼ö ÀÖ´Ù.
- * @ ¾÷µ¥ÀÌÆ® µÉ¼ö ÀÖ´Ù. 
- * [»ç¿ë¹ý]
- * RotateableGameObject »ý¼º
+/* Rotate ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® 
+ * @ ï¿½×·ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½.
+ * @ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½É¼ï¿½ ï¿½Ö´ï¿½. 
+ * [ï¿½ï¿½ï¿½ï¿½]
+ * RotateableGameObject ï¿½ï¿½
  * Call SetBitmap 
  * */
 public class RotateableGameObject extends BaseObject implements IDrawable, IControllable{
@@ -38,10 +38,10 @@ public class RotateableGameObject extends BaseObject implements IDrawable, ICont
 		sp.SetPivot(SPRITE_PIVOT.SPRITE_PIVOT_CENTER);
 	}
 	
-	protected void UpdateRotate(int x,int y){
+	protected void UpdateRotate(float x,float y){
 		float angle = 0;
 		
-		/*°¢µµ °è»êÀ» ÇÑ´Ù. p´Â Á¤±ÔÈ­µÈ ¸¶¿ì½º ÁÂÇ¥*/
+		/*ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ´ï¿½. pï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ì½º ï¿½ï¿½Ç¥*/
 		PointF p = new PointF();
 		p.set(x,y);
 		float len = p.length();
@@ -50,12 +50,12 @@ public class RotateableGameObject extends BaseObject implements IDrawable, ICont
 		
 		PointF pr = new PointF(objectPos.x - p.x,objectPos.y - p.y);
 		
-		float r = pr.length();	//°¢µµ¸¦ ±¸ÇÏ±â À§ÇÑ ÄÚµå
+		float r = pr.length();	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½
 		//@ = cos-1 (p.x/r)
 		//@ = sin-1 (p.y/r)
 		float angleSeta = 0;
 		
-		//p(¸¶¿ì½º ÁÂÇ¥) - ObjectPos
+		//p(ï¿½ï¿½ï¿½ì½º ï¿½ï¿½Ç¥) - ObjectPos
 		angle = (float) (Math.atan((y - objectPos.y)/(x - objectPos.x))*(180/Math.PI));
 		if(x - objectPos.x > 0){
 			
@@ -63,15 +63,15 @@ public class RotateableGameObject extends BaseObject implements IDrawable, ICont
 			angle = (float) (Math.atan((objectPos.y - y)/(objectPos.x - x))*(180/Math.PI));
 		}
 		
-		if((x > objectPos.x)  && y < objectPos.y){	//MousePos :  1»çºÐ¸é
+		if((x > objectPos.x)  && y < objectPos.y){	//MousePos :  1ï¿½ï¿½Ð¸ï¿½
 			angleSeta = 0;
-		}else if(x < objectPos.x  && y < objectPos.y ){	//(2»çºÐ¸é
+		}else if(x < objectPos.x  && y < objectPos.y ){	//(2ï¿½ï¿½Ð¸ï¿½
 			angleSeta = 180;
-		}else if(x < objectPos.x && y > objectPos.y){	//3»çºÐ¸é
+		}else if(x < objectPos.x && y > objectPos.y){	//3ï¿½ï¿½Ð¸ï¿½
 			angleSeta = 180;
-		}else if(x > objectPos.x && y > objectPos.y){	//4»çºÐ¸é
+		}else if(x > objectPos.x && y > objectPos.y){	//4ï¿½ï¿½Ð¸ï¿½
 			angleSeta = 0;
-		}else{											//¹«ÇÑ´ë¸¦ ¹æÁöÇÔ.
+		}else{											//ï¿½ï¿½ï¿½Ñ´ë¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
 			angle = -45;
 			angleSeta = 0;
 		}
@@ -82,21 +82,21 @@ public class RotateableGameObject extends BaseObject implements IDrawable, ICont
 		Log.v("Angle","Angle : " +  angle );
 		Log.v("AngleSeta","AngleSeta : " +  angleSeta );
 		
-		//º¯È¯.
+		//ï¿½ï¿½È¯.
 		sp.SetRotate(angle + angleSeta);
 	}
 	
-	public void onActionUp(int x, int y) {
+	public void onActionUp(float x, float y) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void onActionDown(int x, int y) {
+	public void onActionDown(float x, float y) {
 		// TODO Auto-generated method stub
 		UpdateRotate(x,y);
 	}
 
-	public void onActionMove(int x, int y) {
+	public void onActionMove(float x, float y) {
 		// TODO Auto-generated method stub
 		UpdateRotate(x,y);
 	}

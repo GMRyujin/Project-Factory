@@ -19,6 +19,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Handler;
@@ -45,9 +46,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 
 	boolean isTouchMove = false, isTouchDown = false, isTouchUp = false;
 
-	ArrayList<Point> touchMove = new ArrayList<Point>();
-	ArrayList<Point> touchDown = new ArrayList<Point>();
-	ArrayList<Point> touchUp = new ArrayList<Point>();
+	ArrayList<PointF> touchMove = new ArrayList<PointF>();
+	ArrayList<PointF> touchDown = new ArrayList<PointF>();
+	ArrayList<PointF> touchUp = new ArrayList<PointF>();
 
 	private boolean mFlag;
 	private Handler mHandler;
@@ -306,6 +307,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 		 * [수정금지]
 		 * Thread run(프레임 동기화 기술)
 		 * */
+		@SuppressWarnings("unchecked")
 		public final void run() {
 			Canvas canvas = null; // canvas占쏙옙 占쏙옙占쏙옙占�
 
@@ -390,35 +392,35 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 							 * 팅긴다.
 							 */
 							GameWorld world = GameWorld.getInstance();
-							Iterator<Point> itor;
+							Iterator<PointF> itor;
 
 							synchronized (touchDown) {
-								itor = ((ArrayList<Point>) touchDown.clone())
+								itor = ((ArrayList<PointF>) touchDown.clone())
 										.iterator();
 								touchDown.clear();
 							}
 							while (itor.hasNext()) {
-								Point p = itor.next();
+								PointF p = itor.next();
 								world.onActionDown(p.x, p.y);
 							}
 
 							synchronized (touchMove) {
-								itor = ((ArrayList<Point>) touchMove.clone())
+								itor = ((ArrayList<PointF>) touchMove.clone())
 										.iterator();
 								touchMove.clear();
 							}
 							while (itor.hasNext()) {
-								Point p = itor.next();
+								PointF p = itor.next();
 								world.onActionMove(p.x, p.y);
 							}
 
 							synchronized (touchUp) {
-								itor = ((ArrayList<Point>) touchUp.clone())
+								itor = ((ArrayList<PointF>) touchUp.clone())
 										.iterator();
 								touchUp.clear();
 							}
 							while (itor.hasNext()) {
-								Point p = itor.next();
+								PointF p = itor.next();
 								world.onActionUp(p.x, p.y);
 							}
 
@@ -440,6 +442,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 	// -------------------- 쓰레드에서 사용하는 버튼 ----------------------------
 	boolean isMultitouchEvent = false;
 	
+	/**
+	 * @brief 멀티터치를 허용한다면 이 메소드를 이용해서 멀티터치를 설정하도록 한다.
+	 * */
+	public void setMultiTouch(boolean b){
+		isMultitouchEvent = b;
+	}
+	
 	public final synchronized boolean onTouchEvent(MotionEvent event) {
 		// GameWorld world = GameWorld.getInstance();
 
@@ -448,37 +457,74 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
 		// 내 생각에는 국이 이것을 하지않아도 쓰레드가 같이 호출하게 되는 임계영역을 동기화시키는 것이 낫다고 판단한다.
 		// synchronized (world) {//
 		// 큐를 사용해서 자식 쓰레드와 터치 이벤트를 동기화하였다.
+		/* 멀티 터치 이벤트 */
+		
 		int keyAction = event.getAction();
-		int x = (int) event.getX();
-		int y = (int) event.getY();
-
+		float x =  event.getX();
+		float y =  event.getY();
+		
+		//Log.v("Debug","Touch : " + event.getX());
+		
+		if(isMultitouchEvent == true){
+			//멀티 터치를 적용한다.
+			if(event.getPointerCount() > 1){
+				@SuppressWarnings("unused")
+				int actionPointerId = keyAction & MotionEvent.ACTION_POINTER_ID_MASK;
+				@SuppressWarnings("unused")
+				int actionEvent = keyAction & MotionEvent.ACTION_MASK;
+				
+					
+				switch (keyAction) {
+				case MotionEvent.ACTION_MOVE:
+					synchronized (touchMove) {
+						//touchMove.add(new PointF(event.getX(0), event.getY(0)));
+						//touchMove.add(new PointF(event.getX(1), event.getY(1)));
+					}
+					// world.onActionMove(x, y);
+					break;
+				case MotionEvent.ACTION_UP:
+					synchronized (touchUp) {
+						touchUp.add(new PointF(x, y));
+					}
+					// world.onActionUp(x, y);
+					break;
+				case MotionEvent.ACTION_DOWN:
+					synchronized (touchDown) {
+						touchDown.add(new PointF(x, y));
+					}
+					// world.onActionDown(x, y);
+					break;
+				}
+				
+				
+				return true;
+			}else{//갯수가 하나라면 아래 부분을 실행한다.
+			}
+		}
+		
+		//멀티터치가 아니거나, 멀티터치이지만 하나의 터치좌표만 존재하는 경우 이 부분이 실행된다.
 		switch (keyAction) {
 		case MotionEvent.ACTION_MOVE:
 			synchronized (touchMove) {
-				touchMove.add(new Point(x, y));
+				touchMove.add(new PointF(x, y));
 			}
 			// world.onActionMove(x, y);
 			break;
 		case MotionEvent.ACTION_UP:
 			synchronized (touchUp) {
-				touchUp.add(new Point(x, y));
+				touchUp.add(new PointF(x, y));
 			}
 			// world.onActionUp(x, y);
 			break;
 		case MotionEvent.ACTION_DOWN:
 			synchronized (touchDown) {
-				touchDown.add(new Point(x, y));
+				touchDown.add(new PointF(x, y));
 			}
 			// world.onActionDown(x, y);
 			break;
 		}
-		// 占쌉쇽옙 override 占쌔쇽옙 占쏙옙占쏙옙構占�占실몌옙 return 占쏙옙占쏙옙
-		// super.onTouchEvent(event) 占실므뤄옙
-		// MOVE, UP 占쏙옙占�占싱븝옙트占쏙옙 占쏙옙占싱억옙 占쌩삼옙占싹곤옙 占쌀뤄옙占쏙옙 true 占쏙옙
-		// 占쏙옙환占쏙옙占쌍억옙占�占싼댐옙.
+		
 		return true;
-		// }
-		// }
 	}
 	
 	/**

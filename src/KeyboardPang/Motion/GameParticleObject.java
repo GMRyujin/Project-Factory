@@ -143,17 +143,17 @@ public final class GameParticleObject extends Sprite implements IControllable{
 	}
 
 	@Override
-	public void onActionUp(int x, int y) {
+	public void onActionUp(float x, float y) {
 		if(controls != null) controls.onActionUp(x, y);
 	}
 
 	@Override
-	public void onActionDown(int x, int y) {
+	public void onActionDown(float x, float y) {
 		if(controls != null) controls.onActionDown(x, y);
 	}
 
 	@Override
-	public void onActionMove(int x, int y) {
+	public void onActionMove(float x, float y) {
 		if(controls != null) controls.onActionMove(x, y);
 	}
 }

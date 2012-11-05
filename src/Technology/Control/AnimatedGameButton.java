@@ -31,7 +31,7 @@ public class AnimatedGameButton extends GameButton {
 	}
 	
 	@Override
-	public void onActionUp(int x, int y) {
+	public void onActionUp(float x, float y) {
 		super.onActionUp(x, y);
 		if(upSprite == null || downSprite == null){
 			
@@ -44,7 +44,7 @@ public class AnimatedGameButton extends GameButton {
 	}
 
 	@Override
-	public void onActionDown(int x, int y) {
+	public void onActionDown(float x, float y) {
 		super.onActionDown(x, y);
 		if(upSprite == null || downSprite == null){
 			
@@ -57,7 +57,7 @@ public class AnimatedGameButton extends GameButton {
 	
 	
 	@Override
-	public void onActionMove(int x, int y) {
+	public void onActionMove(float x, float y) {
 		super.onActionMove(x, y);
 		if(upSprite == null || downSprite == null){
 			

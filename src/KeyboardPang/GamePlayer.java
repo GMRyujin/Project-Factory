@@ -19,7 +19,7 @@ public final class GamePlayer implements IControllable {
 	}
 	
 	@Override
-	public void onActionDown(int x, int y) {
+	public void onActionDown(float x, float y) {
 		// TODO Auto-generated method stub
 		//super.onActionDown(x, y);
 		//new BitmapMotion(TextureBank.userPunch, x, y);//펀치 추가
@@ -33,11 +33,11 @@ public final class GamePlayer implements IControllable {
 	}
 
 	@Override
-	public void onActionMove(int x, int y) {
+	public void onActionMove(float x, float y) {
 	}
 	
 
 	@Override
-	public void onActionUp(int x, int y) {
+	public void onActionUp(float x, float y) {
 	}
 }

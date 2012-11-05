@@ -402,7 +402,7 @@ public final class GameWorld implements IControllable, IDrawable, IUpdateable {
         }
 
         /* 갑작스런 이벤트 발생에 오류가 생길수있기때문에 동기화 작업을 해준다. */
-        public void onActionUp(int x, int y) {
+        public void onActionUp(float x, float y) {
         	//TODO 노트가 일정이상 아래로 내려가도록 하면 삭제하도록 하였다. 그러나 한참을 그렇게 기다린후 갑작스럽게 터치를 하면 튕기는 문제가 사라졌다. 
         	//이것의 해결 방법은 World의 update 문으로 이벤트의 추가 삭제 로직을 옮겼다. 아마도 예상되는 문제는 역시 SafeControlAdd문제로써 쓰레드간 동기화의 문제인것 같다.
 			//SafeControllRemove();// 여기에서 목록에있는 업데이트들을 제거한다. 갑작스런 이벤트의 에러를 막기위해서
@@ -415,7 +415,7 @@ public final class GameWorld implements IControllable, IDrawable, IUpdateable {
         }
 
 
-        public void onActionDown(int x, int y) {
+        public void onActionDown(float x, float y) {
 			//SafeControllRemove();// 여기에서 목록에있는 업데이트들을 제거한다. 갑작스런 이벤트의 에러를 막기위해서 여기에
 			//SafeControlAdd();
 			Iterator<IControllable> itor = controllList.iterator();
@@ -425,7 +425,7 @@ public final class GameWorld implements IControllable, IDrawable, IUpdateable {
 			
         }
 
-        public void onActionMove(int x, int y) {
+        public void onActionMove(float x, float y) {
 			//SafeControllRemove();// 여기에서 목록에있는 업데이트들을 제거한다. 갑작스런 이벤트의 에러를 막기위해서
 			//SafeControlAdd();
 			Iterator<IControllable> itor = controllList.iterator();

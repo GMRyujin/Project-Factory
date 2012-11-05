@@ -96,7 +96,7 @@ public class GameButton implements IDrawable, IUpdateable, IControllable {
 	 /**
      * @method 현재 들어온 좌표가 현재 객체와 충돌하는가 ? 
      * */
-    public boolean IsMe(int x,int y)
+    public boolean IsMe(float x,float y)
     {
     	int mx,my;
     	mx = (int)GetLeft();
@@ -109,11 +109,11 @@ public class GameButton implements IDrawable, IUpdateable, IControllable {
     	return false;
     }
     
-    public boolean IsMeDown(int x,int y)
+    public boolean IsMeDown(float x,float y)
     {
     	return IsMe(x, y);
     }
-    public boolean IsMeUp(int x,int y)
+    public boolean IsMeUp(float x,float y)
     {
     	return IsMe(x, y);
     }
@@ -122,7 +122,7 @@ public class GameButton implements IDrawable, IUpdateable, IControllable {
      * @brief 현재 플레이어가 터치를 하지않으면 색깔은 다시 터치하지 않은 상태로 바꾸되, 버튼위에서  DOWN이 되어있었고, Up 이벤트가 발생하면 눌려진걸로 간주한다.
      * */
 	@Override
-	public void onActionUp(int x, int y) {
+	public void onActionUp(float x, float y) {
 		if(IsMeUp(x, y)){
 			//여기가 버튼이 눌려진 곳.
 			if(GetUserController() != null) GetUserController().onActionUp(x, y);
@@ -134,7 +134,7 @@ public class GameButton implements IDrawable, IUpdateable, IControllable {
 	 * @brief 현재 플레이어가 이 버튼에 Down을 했을때 호출되는 이벤트이다.
 	 * */
 	@Override
-	public void onActionDown(int x, int y) {
+	public void onActionDown(float x, float y) {
 		if(IsMeDown(x,y)){
 			if(GetUserController() != null) GetUserController().onActionDown(x, y);
 			SetCurrentColor(downColor);
@@ -144,7 +144,7 @@ public class GameButton implements IDrawable, IUpdateable, IControllable {
 	/**
 	 * @brief 이 메소드는 버튼에서 눌려지고 움직였을때의 이벤트를 담당한다.*/
 	@Override
-	public void onActionMove(int x, int y) {
+	public void onActionMove(float x, float y) {
 		if(IsMeDown(x, y)){
 			if(GetUserController() != null) GetUserController().onActionMove(x, y);
 		}

@@ -21,21 +21,21 @@ public class RythemNote extends RythemBaseObject {
 	}
 	
 	@Override
-	public void onActionUp(int x, int y) {
+	public void onActionUp(float x, float y) {
 		if (IsMe(x, y)) {
 			Log.v("RTest", "OnClick");
 		}
 	}
 
 	@Override
-	public void onActionMove(int x, int y) {
+	public void onActionMove(float x, float y) {
 		if (IsMe(x, y)) {
 			Log.v("RTest", "OnMove");
 		}
 	}
 
 	@Override
-	public void onActionDown(int x, int y) {
+	public void onActionDown(float x, float y) {
 		if (IsMe(x, y)) {
 			Log.v("RTest", "OnDown");
 			GameWorld world = GameWorld.getInstance();

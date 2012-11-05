@@ -24,7 +24,7 @@ public final class ImageGameButton extends GameButton {
 	
 	
 	@Override
-	public void onActionUp(int x, int y) {
+	public void onActionUp(float x, float y) {
 		if(nowBitmap == null){
 			super.onActionUp(x, y);
 		}else{
@@ -38,7 +38,7 @@ public final class ImageGameButton extends GameButton {
 	}
 
 	@Override
-	public void onActionDown(int x, int y) {
+	public void onActionDown(float x, float y) {
 		if(nowBitmap == null){
 			super.onActionDown(x, y);
 		}else{
@@ -54,7 +54,7 @@ public final class ImageGameButton extends GameButton {
 	 * @brief 마우스 버튼이 눌려지고 있을때 그리고 그 위에서 움직여지고 있을때
 	 * */
 	@Override
-	public void onActionMove(int x, int y) {
+	public void onActionMove(float x, float y) {
 		if(nowBitmap == null){
 			super.onActionMove(x, y);
 		}else{

@@ -26,7 +26,7 @@ public class GameObject extends BaseObject implements IControllable, IDrawable, 
         public GameObject(String id,float x,float y){
         		super(id,x,y);
                 objectPos = new PointF(x,y);
-                touchPos = new Point();
+                touchPos = new PointF();
                 SetId(id);
         }
         public GameObject(String id,PointF p){
@@ -65,7 +65,7 @@ public class GameObject extends BaseObject implements IControllable, IDrawable, 
         /**
          * @method 현재 들어온 좌표가 현재 객체와 충돌하는가 ? <반드시 비트맵이 있어야한다. 비트맵이 없다면 항상 false를 호출한다.> 
          * */
-        public boolean IsMe(int x,int y)
+        public boolean IsMe(float x,float y)
         {
         	if(GetBitmap() == null)	return false;
         	
@@ -83,14 +83,14 @@ public class GameObject extends BaseObject implements IControllable, IDrawable, 
         	return false;
         }
         
-        public void onActionUp(int x, int y) {
+        public void onActionUp(float x, float y) {
                 // TODO Auto-generated method stub
                 touchPos.x = x;
                 touchPos.y = y;
         }
 
 
-        public void onActionDown(int x, int y) {
+        public void onActionDown(float x, float y) {
                 // TODO Auto-generated method stub
                 touchPos.x = x;
                 touchPos.y = y;
@@ -104,7 +104,7 @@ public class GameObject extends BaseObject implements IControllable, IDrawable, 
         }
 
 
-        public void onActionMove(int x, int y) {
+        public void onActionMove(float x, float y) {
                 // TODO Auto-generated method stub
                 
                 touchPos.x = x;

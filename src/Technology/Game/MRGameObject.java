@@ -1,6 +1,6 @@
 package Technology.Game;
 
-/* ¿òÁ÷ÀÏ¼ö ÀÖ°í, È¸ÀüµÉ¼ö ÀÖ´Â °ÔÀÓ ¿ÀºêÁ§Æ® (Move Rotate GameObject
+/* ï¿½ï¿½ï¿½ï¿½ï¿½Ï¼ï¿½ ï¿½Ö°ï¿½, È¸ï¿½ï¿½É¼ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® (Move Rotate GameObject
  *  */
 public class MRGameObject extends RotateableGameObject{
 
@@ -9,7 +9,7 @@ public class MRGameObject extends RotateableGameObject{
 		// TODO Auto-generated constructor stub
 	}
 	
-	 public void onActionUp(int x, int y) {
+	 public void onActionUp(float x, float y) {
          // TODO Auto-generated method stub
 		 super.onActionUp(x, y);
 		 
@@ -18,7 +18,7 @@ public class MRGameObject extends RotateableGameObject{
  }
 
 
-	 public void onActionDown(int x, int y) {
+	 public void onActionDown(float x, float y) {
          // TODO Auto-generated method stub
          touchPos.x = x;
          touchPos.y = y;
@@ -34,7 +34,7 @@ public class MRGameObject extends RotateableGameObject{
 	 }
 
 
-	 public void onActionMove(int x, int y) {
+	 public void onActionMove(float x, float y) {
          // TODO Auto-generated method stub
          touchPos.x = x;
          touchPos.y = y;

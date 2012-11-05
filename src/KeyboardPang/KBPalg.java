@@ -37,7 +37,7 @@ public final class KBPalg extends GameObject{
 	}
 
 	@Override
-	public void onActionDown(int x, int y) {
+	public void onActionDown(float x, float y) {
 		if(IsMe(x, y)){
 			//선택한 객체가 나일때.. 월드에서 나를 제거한다.
 			GameWorld world = GameWorld.getInstance();

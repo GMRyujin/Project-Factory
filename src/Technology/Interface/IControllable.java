@@ -1,12 +1,12 @@
 package Technology.Interface;
 
-//ÀÌ ÀÎÅÍÆäÀÌ½º¸¦ ±¸ÇöÇÑ Å¬·¡½º´Â ÄÁÆ®·Ñ µÉ¼ö ÀÖ´Ù. (Touch)
+//ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½É¼ï¿½ ï¿½Ö´ï¿½. (Touch)
 public interface IControllable {
-	//ÅÍÄ¡ ÀÌº¥Æ®°¡ UPÀÏ¶§ È£ÃâµÈ´Ù.
-	void onActionUp(int x,int y);
-	//ÅÍÄ¡ ÀÌº¥Æ®°¡ DOWNÀÏ¶§ È£ÃâµÈ´Ù.
-	void onActionDown(int x,int y);
-	//ÅÍÄ¡ ÀÌº¥Æ®°¡ MOVEÀÏ¶§ È£ÃâµÈ´Ù.
-	void onActionMove(int x,int y);
+	//ï¿½ï¿½Ä¡ ï¿½Ìºï¿½Æ®ï¿½ï¿½ UPï¿½Ï¶ï¿½ È£ï¿½ï¿½È´ï¿½.
+	void onActionUp(float x,float y);
+	//ï¿½ï¿½Ä¡ ï¿½Ìºï¿½Æ®ï¿½ï¿½ DOWNï¿½Ï¶ï¿½ È£ï¿½ï¿½È´ï¿½.
+	void onActionDown(float x,float y);
+	//ï¿½ï¿½Ä¡ ï¿½Ìºï¿½Æ®ï¿½ï¿½ MOVEï¿½Ï¶ï¿½ È£ï¿½ï¿½È´ï¿½.
+	void onActionMove(float x,float y);
 }
 

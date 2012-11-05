@@ -81,7 +81,7 @@ public class RythemBaseObject extends BaseObject  implements IDrawable, IControl
 	 /**
      * @method 현재 들어온 좌표가 현재 객체와 충돌하는가 ? <이 클래스는 GameObject에서 부터 재정의 되었다.> 
      * */
-    public boolean IsMe(int x,int y)
+    public boolean IsMe(float x,float y)
     {
     	//if(GetBitmap() == null)	return false;	//비트맵은 GameObject에게 없고, SpriteEx에게 있기때문에 주석처리 하였다.
     	
@@ -109,17 +109,17 @@ public class RythemBaseObject extends BaseObject  implements IDrawable, IControl
 	}
 	
 	@Override
-	public void onActionUp(int x, int y) {
+	public void onActionUp(float x, float y) {
 		if(contonller != null)	contonller.onActionUp(x, y);
 	}
 
 	@Override
-	public void onActionDown(int x, int y) {
+	public void onActionDown(float x, float y) {
 		if(contonller != null)	contonller.onActionDown(x, y);
 	}
 
 	@Override
-	public void onActionMove(int x, int y) {
+	public void onActionMove(float x, float y) {
 		if(contonller != null)	contonller.onActionMove(x, y);
 	}
 

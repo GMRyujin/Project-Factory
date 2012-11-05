@@ -19,13 +19,13 @@ import Technology.Interface.IUpdateable;
 public class BaseObject extends RigidBody implements IUpdateable, INameable{
 		protected float currentTime = 0;
         protected PointF objectPos = null;
-        protected Point touchPos = null;
+        protected PointF touchPos = null;
         protected PointF dir = new PointF();
         protected String id = null;
         
         public BaseObject(String id,float x,float y){
                 objectPos = new PointF(x,y);
-                touchPos = new Point();
+                touchPos = new PointF();
                 SetId(id);
         }
         public BaseObject(String id,PointF p){
@@ -69,13 +69,13 @@ public class BaseObject extends RigidBody implements IUpdateable, INameable{
         	currentTime = time;
         }
         
-        public void onActionUp(int x, int y) {
+        public void onActionUp(float x, float y) {
                 // TODO Auto-generated method stub
                 touchPos.x = x;
                 touchPos.y = y;
         }
 
-        public void onActionDown(int x, int y) {
+        public void onActionDown(float x, float y) {
                 // TODO Auto-generated method stub
                 touchPos.x = x;
                 touchPos.y = y;
@@ -88,7 +88,7 @@ public class BaseObject extends RigidBody implements IUpdateable, INameable{
                 dir.y = dir.y / len;
         }
 
-        public void onActionMove(int x, int y) {
+        public void onActionMove(float x, float y) {
                 // TODO Auto-generated method stub
                 
                 touchPos.x = x;
